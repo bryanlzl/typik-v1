@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Verdana";
+  src: url("/assets/fonts/verdana-font-family/verdana.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: "OpenSans";
+  src: url("/assets/fonts/open-sans-font-family/OpenSans-VariableFont_wdth,wght.ttf")
+    format("opentype");
+}
