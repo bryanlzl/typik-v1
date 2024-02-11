@@ -8,6 +8,9 @@ const config: Config = {
         verdana: "Verdana",
         opensans: "OpenSans",
       },
+      animation: {
+        "blink-cursor": "blink-cursor 1.5s infinite",
+      },
     },
   },
   plugins: [],
