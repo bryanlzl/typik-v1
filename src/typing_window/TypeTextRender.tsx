@@ -42,18 +42,58 @@ const TypeTextRender = (props: PropsForRender): JSX.Element => {
       rawLenTypedList + (typingState.currentWord ? 1 : 0);
     const lenWordsTyped: number = wordsTyped.length;
 
-    const currWord: string = typingState.currentWord;
     const wordList: string[] = settingContext.wordList;
     const typedList: string[] = typingState.typedList;
+    const correctWord: string = wordList[actLenTypedList - 1];
+    const currWord: string = typingState.currentWord;
+
+    const prevPrevWordList: RenderTyped[] | [] =
+      lenWordsTyped >= 2 ? wordsTyped.slice(0, lenWordsTyped - 1) : [];
+    const prevWord: RenderTyped | [] =
+      lenWordsTyped >= 1 ? wordsTyped[lenWordsTyped - 1] : [];
 
     if (lenWordsTyped < actLenTypedList) {
+      setWordsTyped(
+        prevPrevWordList.concat(prevWord).concat({
+          actual: correctWord,
+          typed: currWord,
+          excess:
+            currWord.length > correctWord.length
+              ? currWord.substring(correctWord.length, currWord.length + 1)
+              : "",
+          isCorrect:
+            currWord === correctWord.substring(0, currWord.length)
+              ? true
+              : false,
+        })
+      );
     } else if (lenWordsTyped > actLenTypedList) {
-      //setTypingState((prev: Setting) => {});
-    } else if (lenWordsTyped === actLenTypedList) {
+      setWordsTyped(prevPrevWordList.slice(0, -1));
+    } else if (lenWordsTyped === actLenTypedList && lenWordsTyped > 0) {
+      const typedWord = currWord
+        ? currWord
+        : typedList.length > 0
+        ? typedList[typedList.length - 1]
+        : "";
+      setWordsTyped(
+        prevPrevWordList.concat({
+          ...prevWord,
+          typed: typedWord,
+          excess:
+            typedWord.length > correctWord.length
+              ? typedWord.substring(correctWord.length, typedWord.length + 1)
+              : "",
+          isCorrect:
+            typedWord === correctWord.substring(0, typedWord.length)
+              ? true
+              : false,
+        })
+      );
     }
-    console.log(wordsTyped);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [typingState.currentWord, typingState.typedList]);
+  }, [typingState]);
+
+  console.log(wordsTyped);
 
   return (
     <div>
