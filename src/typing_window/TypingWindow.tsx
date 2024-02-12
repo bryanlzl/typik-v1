@@ -3,14 +3,43 @@ import React, { useState } from "react";
 import { SettingProvider } from "../typing_window/SettingsProvider";
 import TypingInterface from "./TypingInterface";
 
+interface RenderTyped {
+  actual: string;
+  typed: string;
+  excess: string;
+  isCorrect: boolean;
+}
+
 interface Setting {
   fontStyle: string;
   wordList: string[];
-  typedList: string[];
-  duration: Number;
+  duration: number;
   allowedMods: Set<string>;
   allowedKeys: Set<string>;
 }
+
+const wordList: string[] = [
+  "apple",
+  "banana",
+  "orange",
+  "strawberry",
+  "blueberry",
+  "raspberry",
+  "pineapple",
+  "grape",
+  "watermelon",
+  "kiwi",
+  "mango",
+  "peach",
+  "pear",
+  "apricot",
+  "cherry",
+  "coconut",
+  "fig",
+  "lemon",
+  "lime",
+  "plum",
+];
 
 const allowedMods: Set<string> = new Set([
   "Backspace",
@@ -82,39 +111,22 @@ punctuationMarks.forEach((mark: string) => allowedKeys.add(mark));
 const TypingWindow = (): JSX.Element => {
   const [useSettings, setSettings] = useState<Setting>({
     fontStyle: "verdana",
-    wordList: [
-      "apple",
-      "banana",
-      "orange",
-      "strawberry",
-      "blueberry",
-      "raspberry",
-      "pineapple",
-      "grape",
-      "watermelon",
-      "kiwi",
-      "mango",
-      "peach",
-      "pear",
-      "apricot",
-      "cherry",
-      "coconut",
-      "fig",
-      "lemon",
-      "lime",
-      "plum",
-    ],
-    typedList: [],
+    wordList: wordList,
     duration: 30,
     allowedMods: allowedMods,
     allowedKeys: allowedKeys,
   });
 
+  const [wordsTyped, setWordsTyped] = useState<RenderTyped[]>([]);
+
   return (
     <SettingProvider initialState={useSettings}>
       <main className="flex flex-col justify-center items-center">
         <div className="flex flex-col justify-center items-center ">
-          <TypingInterface />
+          <TypingInterface
+            wordsTyped={wordsTyped}
+            setWordsTyped={setWordsTyped}
+          />
         </div>
       </main>
     </SettingProvider>

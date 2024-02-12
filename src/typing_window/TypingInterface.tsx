@@ -7,7 +7,7 @@ interface TypingSettings {
   focus: Boolean;
   currentWord: string;
   typedList: string[];
-  cursorPosition: Number;
+  cursorPosition: number;
 }
 
 interface ModKeyEvent {
@@ -15,7 +15,20 @@ interface ModKeyEvent {
   modEvent: string;
 }
 
-const TypingInterface = (): JSX.Element => {
+interface RenderTyped {
+  actual: string;
+  typed: string;
+  excess: string;
+  isCorrect: boolean;
+}
+
+interface PropsType {
+  wordsTyped: RenderTyped[];
+  setWordsTyped: React.Dispatch<React.SetStateAction<RenderTyped[]>>;
+}
+
+const TypingInterface = (props: PropsType): JSX.Element => {
+  const { wordsTyped, setWordsTyped } = props;
   const { settingContext, setSettingContext } = useSettingContext();
   const allowedMods: Set<string> = settingContext.allowedMods;
   const allowedKeys: Set<string> = settingContext.allowedKeys;
@@ -132,7 +145,12 @@ const TypingInterface = (): JSX.Element => {
 
     return (
       <div>
-        <TypeTextRender typingState={typingState} />
+        <TypeTextRender
+          typingState={typingState}
+          wordsTyped={wordsTyped}
+          setTypingState={setTypingState}
+          setWordsTyped={setWordsTyped}
+        />
       </div>
     );
   };

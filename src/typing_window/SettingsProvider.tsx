@@ -1,4 +1,13 @@
+"use client";
 import React, { createContext, useContext, useState } from "react";
+
+interface Setting {
+  fontStyle: string;
+  wordList: string[];
+  duration: number;
+  allowedMods: Set<string>;
+  allowedKeys: Set<string>;
+}
 
 interface SettingProviderProps {
   initialState: any;
@@ -6,7 +15,7 @@ interface SettingProviderProps {
 }
 
 interface SettingContextValue {
-  settingContext: any; // Change to appropriate type if needed
+  settingContext: Setting; // Change to appropriate type if needed
   setSettingContext: React.Dispatch<React.SetStateAction<any>>; // Change to appropriate type if needed
 }
 
