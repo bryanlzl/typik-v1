@@ -2,33 +2,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { SettingProvider } from "../typing_window/SettingsProvider";
 import TypingInterface from "./TypingInterface";
-
-interface RenderTyped {
-  actual: string;
-  typed: string;
-  excess: string;
-  isCorrect: boolean;
-}
-
-interface Setting {
-  fontStyle: string;
-  wordList: string[];
-  duration: number;
-  allowedMods: Set<string>;
-  allowedKeys: Set<string>;
-}
-
-interface TypingSettings {
-  focus: Boolean;
-  currentWord: string;
-  typedList: string[]; // User's typed text
-  cursorPosition: number;
-}
-
-interface ModKeyEvent {
-  mod: string;
-  modEvent: string;
-}
+import {
+  RenderTyped,
+  Setting,
+  TypingSettings,
+  ModKeyEvent,
+} from "../types/TypingTypes";
 
 const wordList: string[] = [
   "apple",

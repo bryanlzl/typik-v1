@@ -1,35 +1,7 @@
 "use client";
 import { useSettingContext } from "../typing_window/SettingsProvider";
+import { RenderTyped, PropTypes, Cursor } from "../types/TypingTypes";
 
-interface Setting {
-  fontStyle: string;
-  wordList: string[]; // Correct text
-  duration: number;
-  allowedMods: Set<string>;
-  allowedKeys: Set<string>;
-}
-
-interface TypingSettings {
-  focus: Boolean;
-  currentWord: string;
-  typedList: string[]; // User's typed text
-  cursorPosition: number;
-}
-
-interface RenderTyped {
-  // Store rendered text (and validation)
-  actual: string;
-  typed: string;
-  excess: string;
-  isCorrect: boolean;
-}
-
-interface PropsForRender {
-  typingState: TypingSettings;
-  setTypingState: React.Dispatch<React.SetStateAction<TypingSettings>>;
-  wordsTyped: RenderTyped[];
-  setWordsTyped: React.Dispatch<React.SetStateAction<RenderTyped[]>>;
-}
 const TypeTextRender = (props: PropTypes): JSX.Element => {
   const { settingContext, setSettingContext } = useSettingContext();
   const { typingState, wordsTyped } = props;
