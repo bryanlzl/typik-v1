@@ -1,5 +1,4 @@
 "use client";
-import React, { useState, useEffect } from "react";
 import { useSettingContext } from "../typing_window/SettingsProvider";
 
 interface Setting {
@@ -31,81 +30,108 @@ interface PropsForRender {
   wordsTyped: RenderTyped[];
   setWordsTyped: React.Dispatch<React.SetStateAction<RenderTyped[]>>;
 }
-
-const TypeTextRender = (props: PropsForRender): JSX.Element => {
+const TypeTextRender = (props: PropTypes): JSX.Element => {
   const { settingContext, setSettingContext } = useSettingContext();
-  const { typingState, setTypingState, wordsTyped, setWordsTyped } = props;
+  const { typingState, wordsTyped } = props;
 
-  useEffect(() => {
-    const rawLenTypedList: number = typingState.typedList.length;
-    const actLenTypedList: number =
-      rawLenTypedList + (typingState.currentWord ? 1 : 0);
+  const textRenderer = () => {
+    const lenWordList: number = settingContext.wordList.length;
     const lenWordsTyped: number = wordsTyped.length;
 
-    const wordList: string[] = settingContext.wordList;
-    const typedList: string[] = typingState.typedList;
-    const correctWord: string = wordList[actLenTypedList - 1];
-    const currWord: string = typingState.currentWord;
+    const wordCursePosition: number =
+      typingState.cursorPosition === 0
+        ? 0
+        : wordsTyped[lenWordsTyped - 1]?.excess
+        ? wordsTyped[lenWordsTyped - 1].typed.length -
+          wordsTyped[lenWordsTyped - 1].actual.length -
+          1
+        : wordsTyped[lenWordsTyped - 1]?.actual.length
+        ? wordsTyped[lenWordsTyped - 1]?.typed.length - 1
+        : 0;
 
-    const prevPrevWordList: RenderTyped[] | [] =
-      lenWordsTyped >= 2 ? wordsTyped.slice(0, lenWordsTyped - 1) : [];
-    const prevWord: RenderTyped | [] =
-      lenWordsTyped >= 1 ? wordsTyped[lenWordsTyped - 1] : [];
+    const cursorRender = (
+      position: string,
+      index: number,
+      charIndex: number
+    ): JSX.Element | any => {
+      if (position === "body") {
+        return (
+          cursorPosition.wordIndex === index &&
+          !cursorPosition.isExcess &&
+          typingState.currentWord &&
+          cursorPosition.wordPosition == charIndex && (
+            <span className="animate-blink-cursor">|</span>
+          )
+        );
+      } else if (position === "front") {
+        return (
+          typingState.currentWord.length === 0 &&
+          index === 0 && <span className="animate-blink-cursor">|</span>
+        );
+      }
+    };
 
-    if (lenWordsTyped < actLenTypedList) {
-      setWordsTyped(
-        prevPrevWordList.concat(prevWord).concat({
-          actual: correctWord,
-          typed: currWord,
-          excess:
-            currWord.length > correctWord.length
-              ? currWord.substring(correctWord.length, currWord.length + 1)
-              : "",
-          isCorrect:
-            currWord === correctWord.substring(0, currWord.length)
-              ? true
-              : false,
-        })
-      );
-    } else if (lenWordsTyped > actLenTypedList) {
-      setWordsTyped(prevPrevWordList.slice(0, -1));
-    } else if (lenWordsTyped === actLenTypedList && lenWordsTyped > 0) {
-      const typedWord = currWord
-        ? currWord
-        : typedList.length > 0
-        ? typedList[typedList.length - 1]
-        : "";
-      setWordsTyped(
-        prevPrevWordList.concat({
-          ...prevWord,
-          typed: typedWord,
-          excess:
-            typedWord.length > correctWord.length
-              ? typedWord.substring(correctWord.length, typedWord.length + 1)
-              : "",
-          isCorrect:
-            typedWord === correctWord.substring(0, typedWord.length)
-              ? true
-              : false,
-        })
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [typingState]);
+    let cursorPosition: Cursor = {
+      wordIndex: lenWordsTyped ? lenWordsTyped - 1 : 0,
+      wordPosition: wordCursePosition,
+      isFrontOfWord: wordCursePosition % 2 === 0,
+      isExcess: wordsTyped[lenWordsTyped - 1]?.excess ? true : false,
+    };
 
-  console.log(wordsTyped);
+    return (
+      <div className="flex flex-row flex-wrap">
+        {wordsTyped.map((typedWord: RenderTyped, index: number) => (
+          <span key={index} className={`flex flex-row ml-[1vw]`}>
+            <span className="flex flex-row">
+              {typedWord.actual
+                .split("")
+                .map((actualChar: string, charIndex: number) => (
+                  <span key={index + ":" + charIndex} className="flex flex-row">
+                    <p
+                      className={` ${
+                        wordsTyped[index].isCorrect ||
+                        wordsTyped[index].incorrectIndex - 1 >= charIndex
+                          ? ""
+                          : "text-red-700"
+                      }`}
+                    >
+                      {actualChar}
+                    </p>{" "}
+                    {/* TYPED CHAR */}
+                    {cursorRender("body", index, charIndex)}
+                  </span>
+                ))}
+            </span>
+            <span className="flex flex-row text-red-700">
+              {typedWord.excess
+                .split("")
+                .map((excessChar: string, charExIndex: number) => (
+                  <span
+                    key={index + ":" + charExIndex}
+                    className="flex flex-row"
+                  >
+                    <p>{excessChar}</p> {/* EXCESS CHAR */}
+                  </span>
+                ))}
+            </span>
+          </span>
+        ))}
+        {settingContext.wordList
+          .slice(lenWordsTyped, lenWordList + 1)
+          .map((correctWord: string, index: number) => (
+            <span className="flex flex-row ml-[1vw]" key={index}>
+              {cursorRender("front", index, -1)}
+              <p>{correctWord}</p> {/* UNTYPED CHAR */}
+            </span>
+          ))}
+      </div>
+    );
+  };
 
   return (
     <div>
-      <div>{typingState.currentWord}</div>
       <div className="flex flex-wrap flex-row max-w-[50vw]">
-        {typingState.typedList.map((word: string, index: number) => {
-          return (
-            <span key={index} className="mr-[1vw]">
-              {word}
-            </span>
-          );
-        })}
+        {textRenderer()}
       </div>
     </div>
   );

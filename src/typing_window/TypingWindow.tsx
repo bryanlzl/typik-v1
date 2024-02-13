@@ -245,7 +245,7 @@ const TypingWindow = (): JSX.Element => {
             setTypingState((prev) => ({
               ...prev,
               currentWord: typing.current.currentWord,
-              cursorPdoosition: typing.current.cursorPosition,
+              cursorPosition: typing.current.cursorPosition,
             }));
           }
         }

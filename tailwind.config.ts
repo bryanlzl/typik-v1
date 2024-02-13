@@ -8,8 +8,14 @@ const config: Config = {
         verdana: "Verdana",
         opensans: "OpenSans",
       },
+      keyframes: {
+        blinkOpacity: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0" },
+        },
+      },
       animation: {
-        "blink-cursor": "blink-cursor 1.5s infinite",
+        "blink-cursor": "blinkOpacity 1s infinite",
       },
     },
   },
