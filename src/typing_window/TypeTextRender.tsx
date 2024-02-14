@@ -40,6 +40,15 @@ const TypeTextRender = (props: PropTypes): JSX.Element => {
           typingState.currentWord.length === 0 &&
           index === 0 && <span className="animate-blink-cursor">|</span>
         );
+      } else if (position === "excess") {
+        return (
+          cursorPosition.wordIndex === index &&
+          cursorPosition.isExcess &&
+          typingState.currentWord &&
+          cursorPosition.wordPosition == charIndex && (
+            <span className="animate-blink-cursor text-black">|</span>
+          )
+        );
       }
     };
 
@@ -83,6 +92,7 @@ const TypeTextRender = (props: PropTypes): JSX.Element => {
                     className="flex flex-row"
                   >
                     <p>{excessChar}</p> {/* EXCESS CHAR */}
+                    {cursorRender("excess", index, charExIndex)}
                   </span>
                 ))}
             </span>
