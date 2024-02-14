@@ -1,6 +1,7 @@
 "use client";
 import { useSettingContext } from "../typing_window/SettingsProvider";
 import { RenderTyped, PropTypes, Cursor } from "../types/TypingTypes";
+import TypeSummaryModal from "./TypeSummaryModal";
 
 const TypeTextRender = (props: PropTypes): JSX.Element => {
   const { settingContext, setSettingContext } = useSettingContext();
@@ -112,8 +113,18 @@ const TypeTextRender = (props: PropTypes): JSX.Element => {
 
   return (
     <div>
-      <div className="flex flex-wrap flex-row max-w-[50vw]">
-        {textRenderer()}
+      <div className="flex flex-wrap flex-row max-w-[50vw] text-[1.5vw]">
+        {typingState.isDone ? (
+          <TypeSummaryModal
+            wordsTyped={wordsTyped}
+            typingState={props.typingState}
+            typingStateRef={props.typingStateRef}
+            setWordsTyped={props.setWordsTyped}
+            setTypingState={props.setTypingState}
+          />
+        ) : (
+          textRenderer()
+        )}
       </div>
     </div>
   );

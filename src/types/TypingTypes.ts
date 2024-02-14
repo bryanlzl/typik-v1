@@ -13,6 +13,7 @@ export interface TypingSettings {
   currentWord: string;
   typedList: string[]; // User's typed text
   cursorPosition: number;
+  isDone: Boolean;
 }
 
 export interface RenderTyped {
@@ -28,6 +29,7 @@ export interface PropTypes {
   wordsTyped: RenderTyped[];
   setWordsTyped: React.Dispatch<React.SetStateAction<RenderTyped[]>>;
   typingState: TypingSettings;
+  typingStateRef: React.RefObject<TypingSettings>;
   setTypingState: React.Dispatch<React.SetStateAction<TypingSettings>>;
 }
 

@@ -113,6 +113,7 @@ const TypingWindow = (): JSX.Element => {
     currentWord: "",
     typedList: [],
     cursorPosition: 0,
+    isDone: false,
   });
 
   const typing = useRef<TypingSettings>({
@@ -120,8 +121,7 @@ const TypingWindow = (): JSX.Element => {
     currentWord: "",
     typedList: [],
     cursorPosition: 0,
-    //mod: "",
-    //modEvent: ""
+    isDone: false,
   });
 
   const mod = useRef<ModKeyEvent>({
@@ -138,7 +138,12 @@ const TypingWindow = (): JSX.Element => {
     const prevTypedList: string[] = typing.current.typedList;
     const lenTypedList: number = typing.current.typedList.length;
 
-    if (keyType === "keydown" && allowedKeys.has(keyPress)) {
+    if (
+      (currWord === "" || currWord.length > 0) &&
+      lenTypedList >= useSettings.wordList.length
+    ) {
+      setTypingState((prev) => ({ ...prev, isDone: true }));
+    } else if (keyType === "keydown" && allowedKeys.has(keyPress)) {
       if (currWord.length === 0) {
         if (!allowedMods.has(keyPress)) {
           typing.current.currentWord += keyPress;
@@ -255,6 +260,7 @@ const TypingWindow = (): JSX.Element => {
           <TypingInterface
             wordsTyped={wordsTyped}
             typingState={typingState}
+            typingStateRef={typing}
             setWordsTyped={setWordsTyped}
             setTypingState={setTypingState}
           />

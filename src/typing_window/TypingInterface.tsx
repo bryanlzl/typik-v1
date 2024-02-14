@@ -40,6 +40,7 @@ const TypingInterface = (props: PropTypes): JSX.Element => {
       lenWordsTyped >= 2 ? wordsTyped.slice(0, lenWordsTyped - 1) : [];
     const prevWord: RenderTyped | [] =
       lenWordsTyped >= 1 ? wordsTyped[lenWordsTyped - 1] : [];
+
     if (lenWordsTyped < actLenTypedList) {
       setWordsTyped(
         prevPrevWordList.concat(prevWord).concat({
@@ -88,7 +89,6 @@ const TypingInterface = (props: PropTypes): JSX.Element => {
               ? typedWord.substring(correctWord.length, typedWord.length + 1)
               : "",
           isCorrect: isCorrect,
-
           incorrectIndex: firstWrongIndex(correctWord, typedWord),
         })
       );
@@ -106,6 +106,7 @@ const TypingInterface = (props: PropTypes): JSX.Element => {
       <TypeTextRender
         wordsTyped={wordsTyped}
         typingState={props.typingState}
+        typingStateRef={props.typingStateRef}
         setWordsTyped={setWordsTyped}
         setTypingState={props.setTypingState}
       />
