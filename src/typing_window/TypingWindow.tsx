@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { SettingProvider } from "../typing_window/SettingsProvider";
 import TypingInterface from "./TypingInterface";
+import { top99Words } from "@/typing_sets/WordAssets";
 import {
   RenderTyped,
   Setting,
@@ -9,28 +10,7 @@ import {
   ModKeyEvent,
 } from "../types/TypingTypes";
 
-const wordList: string[] = [
-  "apple",
-  "banana",
-  "orange",
-  "strawberry",
-  "blueberry",
-  "raspberry",
-  "pineapple",
-  "grape",
-  "watermelon",
-  "kiwi",
-  "mango",
-  "peach",
-  "pear",
-  "apricot",
-  "cherry",
-  "coconut",
-  "fig",
-  "lemon",
-  "lime",
-  "plum",
-];
+const wordList: string[] = top99Words;
 
 const allowedMods: Set<string> = new Set([
   "Backspace",
@@ -138,18 +118,19 @@ const TypingWindow = (): JSX.Element => {
     const prevTypedList: string[] = typing.current.typedList;
     const lenTypedList: number = typing.current.typedList.length;
 
-    if (
-      (currWord === "" || currWord.length > 0) &&
-      lenTypedList >= useSettings.wordList.length
-    ) {
+    if (lenTypedList == useSettings.wordList.length) {
+      console.log("bitches");
+      typing.current.isDone = true;
       setTypingState((prev) => ({ ...prev, isDone: true }));
     } else if (keyType === "keydown" && allowedKeys.has(keyPress)) {
       if (currWord.length === 0) {
         if (!allowedMods.has(keyPress)) {
           typing.current.currentWord += keyPress;
+          typing.current.cursorPosition = 1;
           setTypingState((prev) => ({
             ...prev,
             currentWord: typing.current.currentWord,
+            cursorPosition: typing.current.cursorPosition,
           }));
         } else if (
           keyPress === "Backspace" &&

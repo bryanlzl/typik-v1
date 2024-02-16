@@ -33,13 +33,19 @@ const TypeTextRender = (props: PropTypes): JSX.Element => {
           !cursorPosition.isExcess &&
           typingState.currentWord &&
           cursorPosition.wordPosition == charIndex && (
-            <span className="animate-blink-cursor">|</span>
+            <span className="absolute xanimate-blink-cursor right-[-5px]">
+              |
+            </span>
           )
         );
       } else if (position === "front") {
         return (
-          typingState.currentWord.length === 0 &&
-          index === 0 && <span className="animate-blink-cursor">|</span>
+          wordsTyped[lenWordsTyped - 1].typed.length === 0 &&
+          cursorPosition.wordIndex === index && (
+            <span className="absolute xanimate-blink-cursor left-[-2px]">
+              |
+            </span>
+          )
         );
       } else if (position === "excess") {
         return (
@@ -47,7 +53,9 @@ const TypeTextRender = (props: PropTypes): JSX.Element => {
           cursorPosition.isExcess &&
           typingState.currentWord &&
           cursorPosition.wordPosition == charIndex && (
-            <span className="animate-blink-cursor text-black">|</span>
+            <span className="absolute xanimate-blink-cursor text-black right-[-5px]">
+              |
+            </span>
           )
         );
       }
@@ -63,14 +71,19 @@ const TypeTextRender = (props: PropTypes): JSX.Element => {
     return (
       <div className="flex flex-row flex-wrap">
         {wordsTyped.map((typedWord: RenderTyped, index: number) => (
-          <span key={index} className={`flex flex-row ml-[1vw]`}>
+          <span key={index} className={`relative flex flex-row ml-[1vw]`}>
+            {cursorRender("front", index, -1)}
             <span className="flex flex-row">
               {typedWord.actual
                 .split("")
                 .map((actualChar: string, charIndex: number) => (
-                  <span key={index + ":" + charIndex} className="flex flex-row">
+                  <span
+                    key={index + ":" + charIndex}
+                    className="relative flex flex-row"
+                  >
+                    {cursorRender("body", index, charIndex)}
                     <p
-                      className={` ${
+                      className={`pl-[2px] ${
                         wordsTyped[index].isCorrect ||
                         wordsTyped[index].incorrectIndex - 1 >= charIndex
                           ? ""
@@ -80,7 +93,6 @@ const TypeTextRender = (props: PropTypes): JSX.Element => {
                       {actualChar}
                     </p>{" "}
                     {/* TYPED CHAR */}
-                    {cursorRender("body", index, charIndex)}
                   </span>
                 ))}
             </span>
@@ -92,8 +104,11 @@ const TypeTextRender = (props: PropTypes): JSX.Element => {
                     key={index + ":" + charExIndex}
                     className="flex flex-row"
                   >
-                    <p>{excessChar}</p> {/* EXCESS CHAR */}
-                    {cursorRender("excess", index, charExIndex)}
+                    <p className="relative pl-[2px]">
+                      {excessChar}
+                      {cursorRender("excess", index, charExIndex)}
+                    </p>{" "}
+                    {/* EXCESS CHAR */}
                   </span>
                 ))}
             </span>
@@ -102,14 +117,32 @@ const TypeTextRender = (props: PropTypes): JSX.Element => {
         {settingContext.wordList
           .slice(lenWordsTyped, lenWordList + 1)
           .map((correctWord: string, index: number) => (
-            <span className="flex flex-row ml-[1vw]" key={index}>
-              {cursorRender("front", index, -1)}
-              <p>{correctWord}</p> {/* UNTYPED CHAR */}
+            <span className="relative flex flex-row ml-[1vw]" key={index}>
+              <span className="flex flex-row">
+                {correctWord
+                  .split("")
+                  .map((actualChar: string, charIndex: number) => (
+                    <span
+                      key={index + ":" + charIndex}
+                      className="flex flex-row"
+                    >
+                      <p
+                        className={`relative pl-[2px]
+                      }`}
+                      >
+                        {actualChar}
+                      </p>{" "}
+                      {/* UNTYPED CHAR */}
+                    </span>
+                  ))}
+              </span>{" "}
             </span>
           ))}
       </div>
     );
   };
+
+  console.log(typingState.isDone, "done b**ches");
 
   return (
     <div>

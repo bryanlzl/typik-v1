@@ -27,58 +27,24 @@ const TypingInterface = (props: PropTypes): JSX.Element => {
 
   useEffect(() => {
     const rawLenTypedList: number = typingState.typedList.length;
-    const actLenTypedList: number =
-      rawLenTypedList + (typingState.currentWord ? 1 : 0);
+    const actLenTypedList: number = rawLenTypedList + 1;
     const lenWordsTyped: number = wordsTyped.length;
 
     const wordList: string[] = settingContext.wordList;
     const typedList: string[] = typingState.typedList;
     const correctWord: string = wordList[actLenTypedList - 1];
     const currWord: string = typingState.currentWord;
+    const typedWord = typingState.cursorPosition > 0 ? currWord : "";
 
     const prevPrevWordList: RenderTyped[] | [] =
       lenWordsTyped >= 2 ? wordsTyped.slice(0, lenWordsTyped - 1) : [];
     const prevWord: RenderTyped | [] =
       lenWordsTyped >= 1 ? wordsTyped[lenWordsTyped - 1] : [];
 
-    if (lenWordsTyped < actLenTypedList) {
-      setWordsTyped(
-        prevPrevWordList.concat(prevWord).concat({
-          actual: correctWord,
-          typed: currWord,
-          excess:
-            currWord.length > correctWord.length
-              ? currWord.substring(correctWord.length, currWord.length + 1)
-              : "",
-          isCorrect:
-            currWord === correctWord.substring(0, currWord.length)
-              ? true
-              : false,
-          incorrectIndex: firstWrongIndex(correctWord, currWord),
-        })
-      );
-    } else if (lenWordsTyped > actLenTypedList) {
-      setWordsTyped(prevPrevWordList);
-    } else if (lenWordsTyped === actLenTypedList && lenWordsTyped > 0) {
-      const typedWord = currWord
-        ? currWord
-        : typedList.length > 0
-        ? typedList[typedList.length - 1]
-        : "";
-
+    if (lenWordsTyped === actLenTypedList && lenWordsTyped > 0) {
       let isCorrect = true;
-      if (currWord.length === 0) {
-        if (correctWord === typedWord) {
-          isCorrect = true;
-        } else {
-          isCorrect = false;
-        }
-      } else {
-        isCorrect =
-          typedWord === correctWord.substring(0, typedWord.length)
-            ? true
-            : false;
-      }
+      isCorrect =
+        typedWord === correctWord.substring(0, typedWord.length) ? true : false;
 
       setWordsTyped(
         prevPrevWordList.concat({
@@ -92,6 +58,39 @@ const TypingInterface = (props: PropTypes): JSX.Element => {
           incorrectIndex: firstWrongIndex(correctWord, typedWord),
         })
       );
+    } else if (
+      lenWordsTyped < actLenTypedList &&
+      wordsTyped.length != settingContext.wordList.length
+    ) {
+      setWordsTyped(
+        prevPrevWordList.concat(prevWord).concat({
+          actual: correctWord,
+          typed: typedWord,
+          excess:
+            currWord.length > correctWord.length
+              ? currWord.substring(correctWord.length, currWord.length + 1)
+              : "",
+          isCorrect:
+            currWord === correctWord.substring(0, currWord.length)
+              ? true
+              : false,
+          incorrectIndex: firstWrongIndex(correctWord, currWord),
+        })
+      );
+    } else if (lenWordsTyped > actLenTypedList) {
+      if (currWord.length > 0) {
+        setWordsTyped(prevPrevWordList);
+      } else {
+        setWordsTyped(
+          prevPrevWordList.slice(0, prevPrevWordList.length - 1).concat({
+            ...prevPrevWordList[prevPrevWordList.length - 1],
+            typed: "",
+            excess: "",
+            isCorrect: true,
+            incorrectIndex: -1,
+          })
+        );
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [typingState]);

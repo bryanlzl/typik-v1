@@ -37,8 +37,8 @@ const TypeSummaryModal = (props: PropTypes) => {
     <div className="flex flex-col items-center">
       <h2>Typing test results</h2>
       <p>{`Accuracy : ` + String(typingAccuracy) + "%"} </p>
-      <p>{`Correct char : ` + String(totalCorrectChar)}</p>
-      <p>{"Wrong char :" + String(totalWrongChar + totalCorrectChar)}</p>
+      <p>{`Correct characters : ` + String(totalCorrectChar)}</p>
+      <p>{"Total characters :" + String(totalWrongChar + totalCorrectChar)}</p>
       <button onClick={resetTestHandler}>Reset</button>
     </div>
   );

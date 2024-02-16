@@ -15,7 +15,7 @@ const config: Config = {
         },
       },
       animation: {
-        "blink-cursor": "blinkOpacity 1s infinite",
+        "blink-cursor": "blinkOpacity 2s infinite",
       },
     },
   },
