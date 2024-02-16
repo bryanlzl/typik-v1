@@ -142,8 +142,6 @@ const TypeTextRender = (props: PropTypes): JSX.Element => {
     );
   };
 
-  console.log(typingState.isDone, "done b**ches");
-
   return (
     <div>
       <div className="flex flex-wrap flex-row max-w-[50vw] text-[1.5vw]">

@@ -119,7 +119,6 @@ const TypingWindow = (): JSX.Element => {
     const lenTypedList: number = typing.current.typedList.length;
 
     if (lenTypedList == useSettings.wordList.length) {
-      console.log("bitches");
       typing.current.isDone = true;
       setTypingState((prev) => ({ ...prev, isDone: true }));
     } else if (keyType === "keydown" && allowedKeys.has(keyPress)) {
@@ -219,7 +218,6 @@ const TypingWindow = (): JSX.Element => {
     // Update control event activated (can be used for other mods) //
     if (keyPress === "Control") {
       mod.current.modEvent = keyType;
-      console.log(mod.current);
     }
   };
 
