@@ -33,7 +33,7 @@ const TypeTextRender = (props: PropTypes): JSX.Element => {
           !cursorPosition.isExcess &&
           typingState.currentWord &&
           cursorPosition.wordPosition == charIndex && (
-            <span className="absolute xanimate-blink-cursor right-[-5px]">
+            <span className="absolute animate-blink-cursor right-[-5px]">
               |
             </span>
           )
@@ -42,7 +42,7 @@ const TypeTextRender = (props: PropTypes): JSX.Element => {
         return (
           wordsTyped[lenWordsTyped - 1].typed.length === 0 &&
           cursorPosition.wordIndex === index && (
-            <span className="absolute xanimate-blink-cursor left-[-2px]">
+            <span className="absolute animate-blink-cursor left-[-2px]">
               |
             </span>
           )
@@ -53,7 +53,7 @@ const TypeTextRender = (props: PropTypes): JSX.Element => {
           cursorPosition.isExcess &&
           typingState.currentWord &&
           cursorPosition.wordPosition == charIndex && (
-            <span className="absolute xanimate-blink-cursor text-black right-[-5px]">
+            <span className="absolute animate-blink-cursor text-black right-[-5px]">
               |
             </span>
           )
