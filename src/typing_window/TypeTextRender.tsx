@@ -3,9 +3,9 @@ import { useSettingContext } from "../typing_window/SettingsProvider";
 import { RenderTyped, PropTypes, Cursor } from "../types/TypingTypes";
 import TypeSummaryModal from "./TypeSummaryModal";
 
-const TypeTextRender = (props: PropTypes): JSX.Element => {
+const TypeTextRender = ({ propPackage }: { propPackage: PropTypes }) => {
   const { settingContext, setSettingContext } = useSettingContext();
-  const { typingState, wordsTyped } = props;
+  const { typingState, wordsTyped } = propPackage;
 
   const textRenderer = () => {
     const lenWordList: number = settingContext.wordList.length;
@@ -42,9 +42,7 @@ const TypeTextRender = (props: PropTypes): JSX.Element => {
         return (
           wordsTyped[lenWordsTyped - 1].typed.length === 0 &&
           cursorPosition.wordIndex === index && (
-            <span className="absolute animate-blink-cursor left-[-2px]">
-              |
-            </span>
+            <span className="absolute animate-blink-cursor left-[-2px]">|</span>
           )
         );
       } else if (position === "excess") {
@@ -144,15 +142,9 @@ const TypeTextRender = (props: PropTypes): JSX.Element => {
 
   return (
     <div>
-      <div className="flex flex-wrap flex-row max-w-[50vw] text-[1.5vw]">
+      <div className="flex flex-wrap flex-row max-w-[50vw] text-[1.5vw] p-[0.7vw]">
         {typingState.isDone ? (
-          <TypeSummaryModal
-            wordsTyped={wordsTyped}
-            typingState={props.typingState}
-            typingStateRef={props.typingStateRef}
-            setWordsTyped={props.setWordsTyped}
-            setTypingState={props.setTypingState}
-          />
+          <TypeSummaryModal propPackage={propPackage} />
         ) : (
           textRenderer()
         )}

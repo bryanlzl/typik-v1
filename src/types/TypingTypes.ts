@@ -27,10 +27,12 @@ export interface RenderTyped {
 
 export interface PropTypes {
   wordsTyped: RenderTyped[];
-  setWordsTyped: React.Dispatch<React.SetStateAction<RenderTyped[]>>;
   typingState: TypingSettings;
   typingStateRef: React.RefObject<TypingSettings>;
+  time: TimeType;
   setTypingState: React.Dispatch<React.SetStateAction<TypingSettings>>;
+  setWordsTyped: React.Dispatch<React.SetStateAction<RenderTyped[]>>;
+  setTime: React.Dispatch<React.SetStateAction<TimeType>>;
 }
 
 export interface Cursor {
@@ -43,4 +45,15 @@ export interface Cursor {
 export interface ModKeyEvent {
   mod: string;
   modEvent: string;
+}
+
+export interface Timer {
+  duration: number;
+  status: string; // running, completed, waiting, inactive
+  isSelectTime: boolean;
+}
+
+export interface TimeType {
+  duration: number;
+  status: string; // running, completed, waiting, inactive
 }

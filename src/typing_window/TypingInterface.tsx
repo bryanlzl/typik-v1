@@ -1,11 +1,19 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import TypeTextRender from "./TypeTextRender";
+import Timer from "./Timer";
 import { useSettingContext } from "../typing_window/SettingsProvider";
-import { RenderTyped, PropTypes } from "../types/TypingTypes";
+import { RenderTyped, PropTypes, TimeType } from "../types/TypingTypes";
 
-const TypingInterface = (props: PropTypes): JSX.Element => {
-  const { wordsTyped, setWordsTyped, typingState, setTypingState } = props;
+const TypingInterface = ({ propPackage }: { propPackage: PropTypes }) => {
+  const {
+    wordsTyped,
+    setWordsTyped,
+    typingState,
+    setTypingState,
+    time,
+    setTime,
+  } = propPackage;
   const { settingContext, setSettingContext } = useSettingContext();
 
   const focusHandler = (): void => {
@@ -45,7 +53,6 @@ const TypingInterface = (props: PropTypes): JSX.Element => {
       let isCorrect = true;
       isCorrect =
         typedWord === correctWord.substring(0, typedWord.length) ? true : false;
-
       setWordsTyped(
         prevPrevWordList.concat({
           ...prevWord,
@@ -95,20 +102,25 @@ const TypingInterface = (props: PropTypes): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [typingState]);
 
-  console.log(wordsTyped);
+  useEffect(() => {
+    if (wordsTyped[0]?.typed.length > 0 && time.status !== "completed") {
+      setTime((prev: TimeType) => {
+        return { ...prev, status: "running" };
+      });
+    }
+  }, [wordsTyped]);
+
+  //console.log(wordsTyped);
 
   return (
-    <div
-      onClick={focusHandler}
-      className={`cursor-pointer ${typingState.focus && "bg-gray-200"}`}
-    >
-      <TypeTextRender
-        wordsTyped={wordsTyped}
-        typingState={props.typingState}
-        typingStateRef={props.typingStateRef}
-        setWordsTyped={setWordsTyped}
-        setTypingState={props.setTypingState}
-      />
+    <div className={`cursor-pointer py-[10px]`}>
+      <Timer propPackage={propPackage} />
+      <div
+        className={`rounded-lg ${typingState.focus && "bg-gray-200"}`}
+        onClick={focusHandler}
+      >
+        <TypeTextRender propPackage={propPackage} />
+      </div>
     </div>
   );
 };

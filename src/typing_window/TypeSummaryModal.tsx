@@ -1,7 +1,8 @@
 import { RenderTyped, PropTypes, TypingSettings } from "../types/TypingTypes";
 
-const TypeSummaryModal = (props: PropTypes) => {
-  const { wordsTyped, setTypingState, setWordsTyped, typingStateRef } = props;
+const TypeSummaryModal = ({ propPackage }: { propPackage: PropTypes }) => {
+  const { wordsTyped, setTypingState, setWordsTyped, typingStateRef } =
+    propPackage;
 
   let totalCorrectChar = 0;
   let totalWrongChar = 0;
@@ -14,32 +15,12 @@ const TypeSummaryModal = (props: PropTypes) => {
     100
   ).toFixed(0);
 
-  const resetTestHandler = () => {
-    setTypingState({
-      focus: false,
-      currentWord: "",
-      typedList: [],
-      cursorPosition: 0,
-      isDone: false,
-    });
-    setWordsTyped([]);
-
-    if (typingStateRef.current) {
-      typingStateRef.current.focus = false;
-      typingStateRef.current.currentWord = "";
-      typingStateRef.current.typedList = [];
-      typingStateRef.current.cursorPosition = 0;
-      typingStateRef.current.isDone = false;
-    }
-  };
-
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center w-[50vw] text-gray-500">
       <h2>Typing test results</h2>
       <p>{`Accuracy : ` + String(typingAccuracy) + "%"} </p>
       <p>{`Correct characters : ` + String(totalCorrectChar)}</p>
       <p>{"Total characters :" + String(totalWrongChar + totalCorrectChar)}</p>
-      <button onClick={resetTestHandler}>Reset</button>
     </div>
   );
 };

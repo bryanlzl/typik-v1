@@ -8,6 +8,8 @@ import {
   Setting,
   TypingSettings,
   ModKeyEvent,
+  TimeType,
+  PropTypes,
 } from "../types/TypingTypes";
 
 const wordList: string[] = top99Words;
@@ -96,6 +98,11 @@ const TypingWindow = (): JSX.Element => {
     isDone: false,
   });
 
+  const [time, setTime] = useState<TimeType>({
+    duration: 15,
+    status: "inactive",
+  });
+
   const typing = useRef<TypingSettings>({
     focus: false,
     currentWord: "",
@@ -110,6 +117,16 @@ const TypingWindow = (): JSX.Element => {
   });
 
   const [wordsTyped, setWordsTyped] = useState<RenderTyped[]>([]);
+
+  const propPackage: PropTypes = {
+    wordsTyped: wordsTyped,
+    typingState: typingState,
+    typingStateRef: typing,
+    time: time,
+    setWordsTyped: setWordsTyped,
+    setTypingState: setTypingState,
+    setTime: setTime,
+  };
 
   const handleKeyPress = (event: KeyboardEvent): void => {
     const keyPress: string = event.key;
@@ -222,27 +239,41 @@ const TypingWindow = (): JSX.Element => {
   };
 
   useEffect(() => {
-    window.addEventListener("keydown", handleKeyPress);
-    window.addEventListener("keyup", handleKeyPress);
-    return () => {
-      window.removeEventListener("keydown", handleKeyPress);
-      window.removeEventListener("keyup", handleKeyPress);
-    };
-  }, []);
+    if (
+      (time.status === "waiting" || time.status === "running") &&
+      typing.current.focus === true
+    ) {
+      window.addEventListener("keydown", handleKeyPress);
+      window.addEventListener("keyup", handleKeyPress);
+      return () => {
+        window.removeEventListener("keydown", handleKeyPress);
+        window.removeEventListener("keyup", handleKeyPress);
+      };
+    }
+  }, [time, setTime]);
 
-  console.log(typingState);
+  useEffect(() => {
+    typing.current.focus = typingState.focus;
+    setTime((prev: TimeType) => {
+      return {
+        ...prev,
+        status:
+          prev.status === "completed"
+            ? "completed"
+            : typingState.focus
+            ? "waiting"
+            : "inactive",
+      };
+    });
+  }, [typingState.focus]);
+
+  //console.log(time.status, typing.current.focus, typingState.focus);
 
   return (
     <SettingProvider initialState={useSettings}>
-      <main className="flex flex-col justify-center items-center">
+      <main className="flex flex-col justify-center items-center my-[30px]">
         <div className="flex flex-col justify-center items-center ">
-          <TypingInterface
-            wordsTyped={wordsTyped}
-            typingState={typingState}
-            typingStateRef={typing}
-            setWordsTyped={setWordsTyped}
-            setTypingState={setTypingState}
-          />
+          <TypingInterface propPackage={propPackage} />
         </div>
       </main>
     </SettingProvider>
