@@ -116,14 +116,16 @@ const TypingInterface = ({ propPackage }: { propPackage: PropTypes }) => {
     <div className={`cursor-pointer py-[10px]`}>
       <Timer propPackage={propPackage} />
       <div
-        className={`rounded-lg ${typingState.focus && "bg-gray-200"}`}
+        className={`rounded-lg ${
+          (typingState.focus || typingState.isDone) && "bg-gray-200"
+        }`}
         onClick={focusHandler}
       >
         <TypeTextRender propPackage={propPackage} />
       </div>
       <div
         className={`flex flex-row justify-center animate-pulse mt-1 ${
-          typingState.focus && "hidden"
+          (typingState.focus || typingState.isDone) && "hidden"
         }`}
       >
         <p>Click on text and start typing to begin</p>

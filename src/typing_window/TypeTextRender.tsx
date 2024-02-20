@@ -143,10 +143,10 @@ const TypeTextRender = ({ propPackage }: { propPackage: PropTypes }) => {
   return (
     <div>
       <div className="flex flex-wrap flex-row max-w-[50vw] text-[1.5vw] p-[0.7vw]">
-        {typingState.isDone ? (
-          <TypeSummaryModal propPackage={propPackage} />
-        ) : (
+        {!typingState.isDone ? (
           textRenderer()
+        ) : (
+          <TypeSummaryModal propPackage={propPackage} />
         )}
       </div>
     </div>
