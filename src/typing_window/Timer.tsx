@@ -149,6 +149,11 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }) => {
           className={`${
             !timerSetting.isSelectTime && "hidden"
           } absolute z-10 w-[9vw] bg-white divide-y divide-slate-200 rounded-lg shadow-lg shadow-slate-300/50 dark:bg-slate-800 dark:divide-slate-700 dark:shadow-lg dark:shadow-slate-800/50 opacity-[85%]`}
+          onMouseLeave={() => {
+            setTimerSetting((prev: Timer) => {
+              return { ...prev, isSelectTime: false };
+            });
+          }}
         >
           <ul className="py-2 text-sm text-slate-800 dark:text-slate-300">
             {timeOptions.map((duration: number, index: number) => (

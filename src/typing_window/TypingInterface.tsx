@@ -108,6 +108,7 @@ const TypingInterface = ({ propPackage }: { propPackage: PropTypes }) => {
         return { ...prev, status: "running" };
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wordsTyped]);
 
   //console.log(wordsTyped);
