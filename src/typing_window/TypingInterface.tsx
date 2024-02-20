@@ -121,6 +121,13 @@ const TypingInterface = ({ propPackage }: { propPackage: PropTypes }) => {
       >
         <TypeTextRender propPackage={propPackage} />
       </div>
+      <div
+        className={`flex flex-row justify-center animate-pulse mt-1 ${
+          typingState.focus && "hidden"
+        }`}
+      >
+        <p>Click on text and start typing to begin</p>
+      </div>
     </div>
   );
 };
