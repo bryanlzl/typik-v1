@@ -43,7 +43,7 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }) => {
         timeRef.current.status === "completed"
       ) {
         // Do nothing
-      } else if (timeRef.current.duration > 0) {
+      } else if (timeRef.current.duration > 1) {
         timeRef.current.duration -= 1;
         setTime({
           status: timeRef.current.status,
@@ -148,18 +148,18 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }) => {
         <div
           className={`${
             !timerSetting.isSelectTime && "hidden"
-          } absolute z-10 w-[9vw] bg-white divide-y divide-slate-200 rounded-lg shadow-lg shadow-slate-300/50 dark:bg-slate-800 dark:divide-slate-700 dark:shadow-lg dark:shadow-slate-800/50 opacity-[85%]`}
+          } absolute z-10 w-[6vw] bg-white divide-y divide-slate-200 rounded-lg shadow-lg shadow-slate-300/50 opacity-[85%]`}
           onMouseLeave={() => {
             setTimerSetting((prev: Timer) => {
               return { ...prev, isSelectTime: false };
             });
           }}
         >
-          <ul className="py-2 text-sm text-slate-800 dark:text-slate-300">
+          <ul className="py-2 text-sm text-black">
             {timeOptions.map((duration: number, index: number) => (
               <li key={index}>
                 <span
-                  className="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700 dark:hover:text-slate-200 text-center cursor-pointer"
+                  className="block px-[0.5vw] py-[0.4vw] hover:bg-slate-200 text-center cursor-pointer text-[0.8vw]"
                   onClick={() => {
                     onDurationSelect(duration);
                   }}
@@ -175,7 +175,7 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }) => {
   };
 
   return (
-    <div className="flex flex-row mx-[2vw] mb-[0.5vw]">
+    <div className="flex flex-row mx-[1.7vw]">
       {!typingState.isDone && (
         <h2 className="text-[1.5vw] mr-[4vw] opacity-60">{time.duration}</h2>
       )}

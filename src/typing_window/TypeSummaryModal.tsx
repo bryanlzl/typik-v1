@@ -3,17 +3,26 @@ import { RenderTyped, PropTypes, TypingSettings } from "../types/TypingTypes";
 const TypeSummaryModal = ({ propPackage }: { propPackage: PropTypes }) => {
   const { wordsTyped, setTypingState, setWordsTyped, typingStateRef } =
     propPackage;
-
   let totalCorrectChar = 0;
   let totalWrongChar = 0;
-  wordsTyped.forEach((word: RenderTyped) => {
-    totalCorrectChar += word.isCorrect ? word.actual.length : 0;
-    totalWrongChar += !word.isCorrect ? word.actual.length : 0;
+  wordsTyped.forEach((word: RenderTyped, index: number) => {
+    if (index === wordsTyped.length - 1) {
+      totalCorrectChar +=
+        word.incorrectIndex == -1 && word.typed.length === word.actual.length
+          ? word.actual.length
+          : 0;
+      totalWrongChar +=
+        word.incorrectIndex != -1 && word.typed.length === word.actual.length
+          ? word.actual.length
+          : 0;
+    } else {
+      totalCorrectChar += word.isCorrect ? word.actual.length : 0;
+      totalWrongChar += !word.isCorrect ? word.actual.length : 0;
+    }
   });
-  const typingAccuracy = (
-    (totalCorrectChar / (totalWrongChar + totalCorrectChar)) *
-    100
-  ).toFixed(0);
+  const totalChar: number = totalWrongChar + totalCorrectChar;
+  const typingAccuracy =
+    totalChar > 0 ? ((totalCorrectChar / totalChar) * 100).toFixed(0) : 0;
 
   return (
     <div className="flex flex-col items-center w-[50vw] text-gray-500">

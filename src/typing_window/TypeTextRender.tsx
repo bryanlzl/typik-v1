@@ -33,7 +33,7 @@ const TypeTextRender = ({ propPackage }: { propPackage: PropTypes }) => {
           !cursorPosition.isExcess &&
           typingState.currentWord &&
           cursorPosition.wordPosition == charIndex && (
-            <span className="absolute animate-blink-cursor right-[-5px]">
+            <span className="absolute animate-blink-cursor right-[-0.23vw]">
               |
             </span>
           )
@@ -42,7 +42,9 @@ const TypeTextRender = ({ propPackage }: { propPackage: PropTypes }) => {
         return (
           wordsTyped[lenWordsTyped - 1].typed.length === 0 &&
           cursorPosition.wordIndex === index && (
-            <span className="absolute animate-blink-cursor left-[-2px]">|</span>
+            <span className="absolute animate-blink-cursor left-[-0.2vw]">
+              |
+            </span>
           )
         );
       } else if (position === "excess") {
@@ -51,7 +53,7 @@ const TypeTextRender = ({ propPackage }: { propPackage: PropTypes }) => {
           cursorPosition.isExcess &&
           typingState.currentWord &&
           cursorPosition.wordPosition == charIndex && (
-            <span className="absolute animate-blink-cursor text-black right-[-5px]">
+            <span className="absolute animate-blink-cursor text-black right-[-0.23vw]">
               |
             </span>
           )
@@ -67,7 +69,11 @@ const TypeTextRender = ({ propPackage }: { propPackage: PropTypes }) => {
     };
 
     return (
-      <div className="flex flex-row flex-wrap">
+      <div
+        className={`flex flex-row flex-wrap p-[0.7vw] rounded-lg ${
+          !(typingState.focus || typingState.isDone) && "blur-sm"
+        }`}
+      >
         {wordsTyped.map((typedWord: RenderTyped, index: number) => (
           <span key={index} className={`relative flex flex-row ml-[1vw]`}>
             {cursorRender("front", index, -1)}
@@ -81,7 +87,7 @@ const TypeTextRender = ({ propPackage }: { propPackage: PropTypes }) => {
                   >
                     {cursorRender("body", index, charIndex)}
                     <p
-                      className={`pl-[2px] ${
+                      className={`pl-[0.05vw] ${
                         wordsTyped[index].isCorrect ||
                         wordsTyped[index].incorrectIndex - 1 >= charIndex
                           ? ""
@@ -102,7 +108,7 @@ const TypeTextRender = ({ propPackage }: { propPackage: PropTypes }) => {
                     key={index + ":" + charExIndex}
                     className="flex flex-row"
                   >
-                    <p className="relative pl-[2px]">
+                    <p className="relative pl-[0.05vw]">
                       {excessChar}
                       {cursorRender("excess", index, charExIndex)}
                     </p>{" "}
@@ -125,7 +131,7 @@ const TypeTextRender = ({ propPackage }: { propPackage: PropTypes }) => {
                       className="flex flex-row"
                     >
                       <p
-                        className={`relative pl-[2px]
+                        className={`relative pl-[0.05vw]
                       }`}
                       >
                         {actualChar}
@@ -142,7 +148,7 @@ const TypeTextRender = ({ propPackage }: { propPackage: PropTypes }) => {
 
   return (
     <div>
-      <div className="flex flex-wrap flex-row max-w-[50vw] text-[1.5vw] p-[0.7vw]">
+      <div className="flex flex-wrap flex-row max-w-[50vw] text-[1.5vw]">
         {!typingState.isDone ? (
           textRenderer()
         ) : (
