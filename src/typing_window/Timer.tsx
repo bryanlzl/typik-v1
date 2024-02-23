@@ -175,7 +175,7 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }) => {
   };
 
   return (
-    <div className="flex flex-row mx-[1.7vw]">
+    <div className="flex flex-row mx-[1.7vw] cursor-default">
       {!typingState.isDone && (
         <h2 className="text-[1.5vw] mr-[4vw] opacity-60">{time.duration}</h2>
       )}

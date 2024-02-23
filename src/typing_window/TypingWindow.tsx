@@ -271,7 +271,7 @@ const TypingWindow = (): JSX.Element => {
 
   return (
     <SettingProvider initialState={useSettings}>
-      <main className="flex flex-col justify-center items-center my-[30px]">
+      <main className="flex flex-col justify-center items-center my-[30px] select-none">
         <div className="flex flex-col justify-center items-center ">
           <TypingInterface propPackage={propPackage} />
         </div>
