@@ -50,6 +50,7 @@ const TypingInterface = ({ propPackage }: { propPackage: PropTypes }) => {
       lenWordsTyped >= 1 ? wordsTyped[lenWordsTyped - 1] : [];
 
     if (lenWordsTyped === actLenTypedList && lenWordsTyped > 0) {
+      // typing => current word //
       let isCorrect = true;
       isCorrect =
         typedWord === correctWord.substring(0, typedWord.length) ? true : false;
@@ -69,22 +70,34 @@ const TypingInterface = ({ propPackage }: { propPackage: PropTypes }) => {
       lenWordsTyped < actLenTypedList &&
       wordsTyped.length != settingContext.wordList.length
     ) {
+      // spacebar => new word //
       setWordsTyped(
-        prevPrevWordList.concat(prevWord).concat({
-          actual: correctWord,
-          typed: typedWord,
-          excess:
-            currWord.length > correctWord.length
-              ? currWord.substring(correctWord.length, currWord.length + 1)
-              : "",
-          isCorrect:
-            currWord === correctWord.substring(0, currWord.length)
-              ? true
-              : false,
-          incorrectIndex: firstWrongIndex(correctWord, currWord),
-        })
+        prevPrevWordList
+          .concat(
+            Array.isArray(prevWord)
+              ? []
+              : {
+                  ...prevWord,
+                  isCorrect: prevWord.actual === prevWord.typed ? true : false,
+                }
+          )
+          .concat({
+            actual: correctWord,
+            typed: typedWord,
+            excess:
+              currWord.length > correctWord.length
+                ? currWord.substring(correctWord.length, currWord.length + 1)
+                : "",
+            isCorrect:
+              currWord === correctWord.substring(0, currWord.length) &&
+              correctWord.length
+                ? true
+                : false,
+            incorrectIndex: firstWrongIndex(correctWord, currWord),
+          })
       );
     } else if (lenWordsTyped > actLenTypedList) {
+      // backspace => deletion //
       if (currWord.length > 0) {
         setWordsTyped(prevPrevWordList);
       } else {
