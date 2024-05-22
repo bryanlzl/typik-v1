@@ -1,20 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-"use client";
-import React, { useState, useEffect } from "react";
-import TypeTextRender from "./TypeTextRender";
-import Timer from "./Timer";
-import useTestSettingsStore from "../../stores/useTestSettingStore/useTestSettingStore";
-import { RenderTyped, PropTypes, TimeType } from "@/types/typingTypes";
+'use client';
+import React, { useState, useEffect } from 'react';
+import TypeTextRender from './TypeTextRender';
+import Timer from './Timer';
+import useTestSettingsStore from '../../stores/useTestSettingStore/useTestSettingStore';
+import { RenderTyped, PropTypes, TimeType } from '@/types/typingTypes';
 
-const TypingInterface = ({ propPackage }: { propPackage: PropTypes }) => {
-  const {
-    wordsTyped,
-    setWordsTyped,
-    typingState,
-    setTypingState,
-    time,
-    setTime,
-  } = propPackage;
+const TypingInterface = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
+  const { wordsTyped, setWordsTyped, typingState, setTypingState, time, setTime } = propPackage;
   const { testSetting } = useTestSettingsStore();
 
   const focusHandler = (): void => {
@@ -43,34 +36,26 @@ const TypingInterface = ({ propPackage }: { propPackage: PropTypes }) => {
     const typedList: string[] = typingState.typedList;
     const correctWord: string = wordList[actLenTypedList - 1];
     const currWord: string = typingState.currentWord;
-    const typedWord = typingState.cursorPosition > 0 ? currWord : "";
+    const typedWord = typingState.cursorPosition > 0 ? currWord : '';
 
-    const prevPrevWordList: RenderTyped[] | [] =
-      lenWordsTyped >= 2 ? wordsTyped.slice(0, lenWordsTyped - 1) : [];
-    const prevWord: RenderTyped | [] =
-      lenWordsTyped >= 1 ? wordsTyped[lenWordsTyped - 1] : [];
+    const prevPrevWordList: RenderTyped[] | [] = lenWordsTyped >= 2 ? wordsTyped.slice(0, lenWordsTyped - 1) : [];
+    const prevWord: RenderTyped | [] = lenWordsTyped >= 1 ? wordsTyped[lenWordsTyped - 1] : [];
 
     if (lenWordsTyped === actLenTypedList && lenWordsTyped > 0) {
       // typing => current word //
       let isCorrect = true;
-      isCorrect =
-        typedWord === correctWord.substring(0, typedWord.length) ? true : false;
+      isCorrect = typedWord === correctWord.substring(0, typedWord.length) ? true : false;
       setWordsTyped(
         prevPrevWordList.concat({
           ...prevWord,
           typed: typedWord,
           excess:
-            typedWord.length > correctWord.length
-              ? typedWord.substring(correctWord.length, typedWord.length + 1)
-              : "",
+            typedWord.length > correctWord.length ? typedWord.substring(correctWord.length, typedWord.length + 1) : '',
           isCorrect: isCorrect,
           incorrectIndex: firstWrongIndex(correctWord, typedWord),
         })
       );
-    } else if (
-      lenWordsTyped < actLenTypedList &&
-      wordsTyped.length != testSetting.wordList.length
-    ) {
+    } else if (lenWordsTyped < actLenTypedList && wordsTyped.length != testSetting.wordList.length) {
       // spacebar => new word //
       setWordsTyped(
         prevPrevWordList
@@ -86,14 +71,8 @@ const TypingInterface = ({ propPackage }: { propPackage: PropTypes }) => {
             actual: correctWord,
             typed: typedWord,
             excess:
-              currWord.length > correctWord.length
-                ? currWord.substring(correctWord.length, currWord.length + 1)
-                : "",
-            isCorrect:
-              currWord === correctWord.substring(0, currWord.length) &&
-              correctWord.length
-                ? true
-                : false,
+              currWord.length > correctWord.length ? currWord.substring(correctWord.length, currWord.length + 1) : '',
+            isCorrect: currWord === correctWord.substring(0, currWord.length) && correctWord.length ? true : false,
             incorrectIndex: firstWrongIndex(correctWord, currWord),
           })
       );
@@ -105,8 +84,8 @@ const TypingInterface = ({ propPackage }: { propPackage: PropTypes }) => {
         setWordsTyped(
           prevPrevWordList.slice(0, prevPrevWordList.length - 1).concat({
             ...prevPrevWordList[prevPrevWordList.length - 1],
-            typed: "",
-            excess: "",
+            typed: '',
+            excess: '',
             isCorrect: true,
             incorrectIndex: -1,
           })
@@ -119,20 +98,18 @@ const TypingInterface = ({ propPackage }: { propPackage: PropTypes }) => {
     return (
       <div
         className={`absolute flex flex-row justify-center w-[100%] h-[100%] rounded-lg items-center ${
-          (typingState.focus || typingState.isDone) && "hidden"
+          (typingState.focus || typingState.isDone) && 'hidden'
         }`}
       >
-        <span className="h-min font-[Verdana] text-[1.2vw] align-bottom">
-          Click on text and start typing to begin
-        </span>
+        <span className="h-min font-[Verdana] text-[1.2vw] align-bottom">Click on text and start typing to begin</span>
       </div>
     );
   };
 
   useEffect(() => {
-    if (wordsTyped[0]?.typed.length > 0 && time.status !== "completed") {
+    if (wordsTyped[0]?.typed.length > 0 && time.status !== 'completed') {
       setTime((prev: TimeType) => {
-        return { ...prev, status: "running" };
+        return { ...prev, status: 'running' };
       });
     }
   }, [wordsTyped]);

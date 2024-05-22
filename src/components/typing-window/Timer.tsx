@@ -1,26 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";
-import Image from "next/image";
-import refreshIcon from "/public/assets/icons/refresh-icon.svg";
-import clockIcon from "/public/assets/icons/clock-icon.svg";
-import {
-  PropTypes,
-  TimeType,
-  TypingSettings,
-  TimerType,
-} from "@/types/typingTypes";
+import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
+import refreshIcon from '/public/assets/icons/refresh-icon.svg';
+import clockIcon from '/public/assets/icons/clock-icon.svg';
+import { PropTypes, TimeType, TypingSettings, TimerType } from '@/types/typingTypes';
 
-const Timer = ({ propPackage }: { propPackage: PropTypes }) => {
-  const {
-    time,
-    typingState,
-    setTime,
-    setTypingState,
-    setWordsTyped,
-    typingStateRef,
-  } = propPackage;
+const Timer = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
+  const { time, typingState, setTime, setTypingState, setWordsTyped, typingStateRef } = propPackage;
   const [timerSetting, setTimerSetting] = useState<TimerType>({
     duration: 15,
-    status: "waiting",
+    status: 'waiting',
     isSelectTime: false,
   });
   const timeHandler = useRef<NodeJS.Timeout | null>(null);
@@ -38,9 +26,9 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }) => {
   useEffect(() => {
     const tick = () => {
       if (
-        timeRef.current.status === "waiting" ||
-        timeRef.current.status === "inactive" ||
-        timeRef.current.status === "completed"
+        timeRef.current.status === 'waiting' ||
+        timeRef.current.status === 'inactive' ||
+        timeRef.current.status === 'completed'
       ) {
         // Do nothing
       } else if (timeRef.current.duration > 1) {
@@ -53,12 +41,12 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }) => {
         timeHandler.current = setTimeout(tick, 1000);
       } else {
         resetTestHandler();
-        setTimerSetting((prev) => ({ ...prev, status: "completed" }));
+        setTimerSetting((prev) => ({ ...prev, status: 'completed' }));
         setTime({
           duration: timerSetting.duration,
-          status: "completed",
+          status: 'completed',
         });
-        timeRef.current.status = "completed";
+        timeRef.current.status = 'completed';
         timeRef.current.duration = timerSetting.duration;
         setTypingState((prev: TypingSettings) => ({ ...prev, isDone: true }));
         clearTimeout(timeHandler.current!);
@@ -80,7 +68,7 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }) => {
   const resetWordHandler = (): void => {
     setTypingState({
       focus: false,
-      currentWord: "",
+      currentWord: '',
       typedList: [],
       cursorPosition: 0,
       isDone: false,
@@ -89,7 +77,7 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }) => {
 
     if (typingStateRef.current) {
       typingStateRef.current.focus = false;
-      typingStateRef.current.currentWord = "";
+      typingStateRef.current.currentWord = '';
       typingStateRef.current.typedList = [];
       typingStateRef.current.cursorPosition = 0;
       typingStateRef.current.isDone = false;
@@ -100,11 +88,11 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }) => {
     clearInterval(timeHandler.current!);
     setTimerSetting({
       ...timerSetting,
-      status: "waiting",
+      status: 'waiting',
       isSelectTime: false,
     });
-    setTime({ ...time, status: "waiting", duration: timerSetting.duration });
-    timeRef.current.status = "waiting";
+    setTime({ ...time, status: 'waiting', duration: timerSetting.duration });
+    timeRef.current.status = 'waiting';
     timeRef.current.duration = timerSetting.duration;
   };
 
@@ -139,15 +127,13 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }) => {
         >
           <Image className="w-[1.7vw]" src={clockIcon} alt="clock-icon" />
           {timerSetting.duration != 0 && (
-            <p className="text-[0.7vw] font-medium pb-[0.2vw] self-end">
-              {timerSetting.duration + "s"}
-            </p>
+            <p className="text-[0.7vw] font-medium pb-[0.2vw] self-end">{timerSetting.duration + 's'}</p>
           )}
         </button>
 
         <div
           className={`${
-            !timerSetting.isSelectTime && "hidden"
+            !timerSetting.isSelectTime && 'hidden'
           } absolute z-10 w-[6vw] bg-white divide-y divide-slate-200 rounded-lg shadow-lg shadow-slate-300/50 opacity-[85%]`}
           onMouseLeave={() => {
             setTimerSetting((prev: TimerType) => {
@@ -176,17 +162,11 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }) => {
 
   return (
     <div className="flex flex-row mx-[1.7vw] cursor-default">
-      {!typingState.isDone && (
-        <h2 className="text-[1.5vw] mr-[4vw] opacity-60">{time.duration}</h2>
-      )}
+      {!typingState.isDone && <h2 className="text-[1.5vw] mr-[4vw] opacity-60">{time.duration}</h2>}
       {renderTimerFunction()}
       <div className="flex flex-row">
         <button onClick={resetAllHandler}>
-          <Image
-            className="w-[1.7vw] opacity-60 hover:opacity-100 mr-[4vw]"
-            src={refreshIcon}
-            alt="refresh-icon"
-          />
+          <Image className="w-[1.7vw] opacity-60 hover:opacity-100 mr-[4vw]" src={refreshIcon} alt="refresh-icon" />
         </button>
       </div>
     </div>

@@ -1,15 +1,8 @@
-"use client";
-import React, { useEffect, useRef, useState } from "react";
-import TypingInterface from "./TypingInterface";
-import useTestSettingsStore from "../../stores/useTestSettingStore/useTestSettingStore";
-import {
-  RenderTyped,
-  Setting,
-  TypingSettings,
-  ModKeyEvent,
-  TimeType,
-  PropTypes,
-} from "@/types/typingTypes";
+'use client';
+import React, { useEffect, useRef, useState } from 'react';
+import TypingInterface from './TypingInterface';
+import useTestSettingsStore from '../../stores/useTestSettingStore/useTestSettingStore';
+import { RenderTyped, Setting, TypingSettings, ModKeyEvent, TimeType, PropTypes } from '@/types/typingTypes';
 
 // import { top99Words } from "../../static-values/wordAssets";
 import {
@@ -17,7 +10,7 @@ import {
   // defaultAllowedKeys,
   defaultPunctuationMarks,
   handleIncludeAlphaNums,
-} from "../../static-values/modsKeysAllowed";
+} from '../../static-values/modsKeysAllowed';
 
 const TypingWindow = (): JSX.Element => {
   const { testSetting } = useTestSettingsStore();
@@ -28,21 +21,21 @@ const TypingWindow = (): JSX.Element => {
   // --- Typing test state --- //
   const [typingState, setTypingState] = useState<TypingSettings>({
     focus: false,
-    currentWord: "",
+    currentWord: '',
     typedList: [],
     cursorPosition: 0,
     isDone: false,
   });
   const typing = useRef<TypingSettings>({
     focus: false,
-    currentWord: "",
+    currentWord: '',
     typedList: [],
     cursorPosition: 0,
     isDone: false,
   });
   const mod = useRef<ModKeyEvent>({
-    mod: "Control",
-    modEvent: "keyup",
+    mod: 'Control',
+    modEvent: 'keyup',
   });
   const [wordsTyped, setWordsTyped] = useState<RenderTyped[]>([]);
 
@@ -53,17 +46,12 @@ const TypingWindow = (): JSX.Element => {
 
   // --- add alphanumeric chars --- //
   // lower: boolean, upper: boolean, num: boolean //
-  const allowedKeys: Set<string> = handleIncludeAlphaNums(
-    testSetting.allowedKeys,
-    true,
-    true,
-    true
-  );
+  const allowedKeys: Set<string> = handleIncludeAlphaNums(testSetting.allowedKeys, true, true, true);
 
   // --- Initial test time --- //
   const [time, setTime] = useState<TimeType>({
     duration: 15,
-    status: "inactive",
+    status: 'inactive',
   });
 
   // --- Initialize props for child components --- //
@@ -88,7 +76,7 @@ const TypingWindow = (): JSX.Element => {
     if (lenTypedList == useSettings.wordList.length) {
       typing.current.isDone = true;
       setTypingState((prev) => ({ ...prev, isDone: true }));
-    } else if (keyType === "keydown" && allowedKeys.has(keyPress)) {
+    } else if (keyType === 'keydown' && allowedKeys.has(keyPress)) {
       if (currWord.length === 0) {
         if (!allowedMods.has(keyPress)) {
           typing.current.currentWord += keyPress;
@@ -98,33 +86,19 @@ const TypingWindow = (): JSX.Element => {
             currentWord: typing.current.currentWord,
             cursorPosition: typing.current.cursorPosition,
           }));
-        } else if (
-          keyPress === "Backspace" &&
-          mod.current.mod + mod.current.modEvent !== "Controlkeydown"
-        ) {
-          typing.current.currentWord = lenTypedList
-            ? prevTypedList[lenTypedList - 1]
-            : "";
-          typing.current.typedList = lenTypedList
-            ? prevTypedList.slice(0, -1)
-            : [];
-          typing.current.cursorPosition = lenTypedList
-            ? prevTypedList[lenTypedList - 1].length
-            : 0;
+        } else if (keyPress === 'Backspace' && mod.current.mod + mod.current.modEvent !== 'Controlkeydown') {
+          typing.current.currentWord = lenTypedList ? prevTypedList[lenTypedList - 1] : '';
+          typing.current.typedList = lenTypedList ? prevTypedList.slice(0, -1) : [];
+          typing.current.cursorPosition = lenTypedList ? prevTypedList[lenTypedList - 1].length : 0;
           setTypingState((prev) => ({
             ...prev,
             currentWord: typing.current.currentWord,
             typedList: typing.current.typedList,
             cursorPosition: typing.current.cursorPosition,
           }));
-        } else if (
-          keyPress === "Backspace" &&
-          mod.current.mod + mod.current.modEvent === "Controlkeydown"
-        ) {
-          typing.current.currentWord = "";
-          typing.current.typedList = lenTypedList
-            ? prevTypedList.slice(0, -1)
-            : [];
+        } else if (keyPress === 'Backspace' && mod.current.mod + mod.current.modEvent === 'Controlkeydown') {
+          typing.current.currentWord = '';
+          typing.current.typedList = lenTypedList ? prevTypedList.slice(0, -1) : [];
           typing.current.cursorPosition = 0;
           setTypingState((prev) => ({
             ...prev,
@@ -143,8 +117,8 @@ const TypingWindow = (): JSX.Element => {
             cursorPosition: typing.current.cursorPosition,
           }));
         } else {
-          if (keyPress === " ") {
-            typing.current.currentWord = "";
+          if (keyPress === ' ') {
+            typing.current.currentWord = '';
             typing.current.typedList = prevTypedList.concat(currWord);
             typing.current.cursorPosition = 0;
             setTypingState((prev) => ({
@@ -153,25 +127,16 @@ const TypingWindow = (): JSX.Element => {
               typedList: typing.current.typedList,
               cursorPosition: typing.current.cursorPosition,
             }));
-          } else if (
-            keyPress === "Backspace" &&
-            mod.current.mod + mod.current.modEvent !== "Controlkeydown"
-          ) {
-            typing.current.currentWord = currWord.substring(
-              0,
-              currWord.length - 1
-            );
+          } else if (keyPress === 'Backspace' && mod.current.mod + mod.current.modEvent !== 'Controlkeydown') {
+            typing.current.currentWord = currWord.substring(0, currWord.length - 1);
             typing.current.cursorPosition = currWord.length - 1;
             setTypingState((prev) => ({
               ...prev,
               currentWord: typing.current.currentWord,
               cursorPosition: typing.current.cursorPosition,
             }));
-          } else if (
-            keyPress === "Backspace" &&
-            mod.current.mod + mod.current.modEvent === "Controlkeydown"
-          ) {
-            typing.current.currentWord = "";
+          } else if (keyPress === 'Backspace' && mod.current.mod + mod.current.modEvent === 'Controlkeydown') {
+            typing.current.currentWord = '';
             typing.current.cursorPosition = 0;
             setTypingState((prev) => ({
               ...prev,
@@ -183,21 +148,18 @@ const TypingWindow = (): JSX.Element => {
       }
     }
     // Update control event activated (can be used for other mods) //
-    if (keyPress === "Control") {
+    if (keyPress === 'Control') {
       mod.current.modEvent = keyType;
     }
   };
 
   useEffect(() => {
-    if (
-      (time.status === "waiting" || time.status === "running") &&
-      typing.current.focus === true
-    ) {
-      window.addEventListener("keydown", handleKeyPress);
-      window.addEventListener("keyup", handleKeyPress);
+    if ((time.status === 'waiting' || time.status === 'running') && typing.current.focus === true) {
+      window.addEventListener('keydown', handleKeyPress);
+      window.addEventListener('keyup', handleKeyPress);
       return () => {
-        window.removeEventListener("keydown", handleKeyPress);
-        window.removeEventListener("keyup", handleKeyPress);
+        window.removeEventListener('keydown', handleKeyPress);
+        window.removeEventListener('keyup', handleKeyPress);
       };
     }
   }, [time, setTime]);
@@ -207,12 +169,7 @@ const TypingWindow = (): JSX.Element => {
     setTime((prev: TimeType) => {
       return {
         ...prev,
-        status:
-          prev.status === "completed"
-            ? "completed"
-            : typingState.focus
-            ? "waiting"
-            : "inactive",
+        status: prev.status === 'completed' ? 'completed' : typingState.focus ? 'waiting' : 'inactive',
       };
     });
   }, [typingState.focus]);

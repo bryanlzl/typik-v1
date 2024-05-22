@@ -1,21 +1,21 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
-  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
+  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     extend: {
       fontFamily: {
-        verdana: "Verdana",
-        opensans: "OpenSans",
+        verdana: 'Verdana',
+        opensans: 'OpenSans',
       },
       keyframes: {
         blinkOpacity: {
-          "0%, 100%": { opacity: "1" },
-          "50%": { opacity: "0" },
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0' },
         },
       },
       animation: {
-        "blink-cursor": "blinkOpacity 2s infinite",
+        'blink-cursor': 'blinkOpacity 2s infinite',
       },
     },
   },
