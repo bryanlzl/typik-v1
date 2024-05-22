@@ -1,8 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { SettingProvider } from "../typing_window/SettingsProvider";
 import TypingInterface from "./TypingInterface";
-import { top99Words } from "@/typing_sets/WordAssets";
+import useTestSettingsStore from "../../stores/useTestSettingStore/useTestSettingStore";
 import {
   RenderTyped,
   Setting,
@@ -10,86 +9,23 @@ import {
   ModKeyEvent,
   TimeType,
   PropTypes,
-} from "../types/TypingTypes";
+} from "../../types/typingTypes";
 
-const wordList: string[] = top99Words;
-
-const allowedMods: Set<string> = new Set([
-  "Backspace",
-  " ",
-  "CapsLock",
-  "Control",
-  "Shift",
-  "Escape",
-]);
-
-// Addition of all other characters
-const allowedKeys: Set<string> = new Set([
-  "Backspace",
-  " ",
-  "CapsLock",
-  "Control",
-  "Shift",
-  "Escape",
-]);
-//const allowedChars: Set<string> = new Set([])
-// Allow alphanumeric characters (a-z, A-Z, 0-9)
-for (let i: number = 48; i <= 57; i++) {
-  allowedKeys.add(String.fromCharCode(i)); // Add numeric characters
-  //allowedChars.add(String.fromCharCode(i))
-}
-for (let i: number = 65; i <= 90; i++) {
-  allowedKeys.add(String.fromCharCode(i)); // Add uppercase letters
-  //allowedChars.add(String.fromCharCode(i))
-}
-for (let i: number = 97; i <= 122; i++) {
-  allowedKeys.add(String.fromCharCode(i)); // Add lowercase letters
-  //allowedChars.add(String.fromCharCode(i))
-}
-// Allow common punctuation marks
-const punctuationMarks: string[] = [
-  "!",
-  "@",
-  "#",
-  "$",
-  "%",
-  "^",
-  "&",
-  "*",
-  "(",
-  ")",
-  "-",
-  "_",
-  "=",
-  "+",
-  "[",
-  "]",
-  "{",
-  "}",
-  "|",
-  ";",
-  ":",
-  "'",
-  '"',
-  ",",
-  "<",
-  ".",
-  ">",
-  "/",
-  "?",
-];
-punctuationMarks.forEach((mark: string) => allowedKeys.add(mark));
-//punctuationMarks.forEach((mark: string) => allowedChars.add(mark));
+// import { top99Words } from "../../static-values/wordAssets";
+import {
+  // defaultMods,
+  // defaultAllowedKeys,
+  defaultPunctuationMarks,
+  handleIncludeAlphaNums,
+} from "../../static-values/modsKeysAllowed";
 
 const TypingWindow = (): JSX.Element => {
-  const [useSettings, setSettings] = useState<Setting>({
-    fontStyle: "verdana",
-    wordList: wordList,
-    duration: 30,
-    allowedMods: allowedMods,
-    allowedKeys: allowedKeys,
-  });
+  const { testSetting } = useTestSettingsStore();
 
+  // --- Typing test settings --- //
+  const [useSettings, setSettings] = useState<Setting>(testSetting);
+
+  // --- Typing test state --- //
   const [typingState, setTypingState] = useState<TypingSettings>({
     focus: false,
     currentWord: "",
@@ -97,12 +33,6 @@ const TypingWindow = (): JSX.Element => {
     cursorPosition: 0,
     isDone: false,
   });
-
-  const [time, setTime] = useState<TimeType>({
-    duration: 15,
-    status: "inactive",
-  });
-
   const typing = useRef<TypingSettings>({
     focus: false,
     currentWord: "",
@@ -110,14 +40,33 @@ const TypingWindow = (): JSX.Element => {
     cursorPosition: 0,
     isDone: false,
   });
-
   const mod = useRef<ModKeyEvent>({
     mod: "Control",
     modEvent: "keyup",
   });
-
   const [wordsTyped, setWordsTyped] = useState<RenderTyped[]>([]);
 
+  // --- Typing test word list and constraints --- //
+  const wordList: string[] = testSetting.wordList;
+  const allowedMods: Set<string> = testSetting.allowedMods;
+  const punctuationMarks: string[] = defaultPunctuationMarks;
+
+  // --- add alphanumeric chars --- //
+  // lower: boolean, upper: boolean, num: boolean //
+  const allowedKeys: Set<string> = handleIncludeAlphaNums(
+    testSetting.allowedKeys,
+    true,
+    true,
+    true
+  );
+
+  // --- Initial test time --- //
+  const [time, setTime] = useState<TimeType>({
+    duration: 15,
+    status: "inactive",
+  });
+
+  // --- Initialize props for child components --- //
   const propPackage: PropTypes = {
     wordsTyped: wordsTyped,
     typingState: typingState,
@@ -128,6 +77,7 @@ const TypingWindow = (): JSX.Element => {
     setTime: setTime,
   };
 
+  // --- Handle key inputs and key combos (i.e. ctrl + backspace)
   const handleKeyPress = (event: KeyboardEvent): void => {
     const keyPress: string = event.key;
     const keyType: string = event.type;
@@ -270,13 +220,11 @@ const TypingWindow = (): JSX.Element => {
   //console.log(time.status, typing.current.focus, typingState.focus);
 
   return (
-    <SettingProvider initialState={useSettings}>
-      <main className="flex flex-col justify-center items-center my-[30px] select-none">
-        <div className="flex flex-col justify-center items-center ">
-          <TypingInterface propPackage={propPackage} />
-        </div>
-      </main>
-    </SettingProvider>
+    <main className="flex flex-col justify-center items-center my-[30px] select-none">
+      <div className="flex flex-col justify-center items-center ">
+        <TypingInterface propPackage={propPackage} />
+      </div>
+    </main>
   );
 };
 

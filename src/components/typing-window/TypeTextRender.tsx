@@ -1,14 +1,14 @@
 "use client";
-import { useSettingContext } from "../typing_window/SettingsProvider";
-import { RenderTyped, PropTypes, Cursor } from "../types/TypingTypes";
-import TypeSummaryModal from "./TypeSummaryModal";
+import useTestSettingsStore from "../../stores/useTestSettingStore/useTestSettingStore";
+import { RenderTyped, PropTypes, Cursor } from "../../types/typingTypes";
+import TypeSummaryModal from "../test-summary-modal/TypeSummaryModal";
 
 const TypeTextRender = ({ propPackage }: { propPackage: PropTypes }) => {
-  const { settingContext, setSettingContext } = useSettingContext();
+  const { testSetting } = useTestSettingsStore();
   const { typingState, wordsTyped } = propPackage;
 
   const textRenderer = () => {
-    const lenWordList: number = settingContext.wordList.length;
+    const lenWordList: number = testSetting.wordList.length;
     const lenWordsTyped: number = wordsTyped.length;
 
     const wordCursePosition: number =
@@ -118,7 +118,7 @@ const TypeTextRender = ({ propPackage }: { propPackage: PropTypes }) => {
             </span>
           </span>
         ))}
-        {settingContext.wordList
+        {testSetting.wordList
           .slice(lenWordsTyped, lenWordList + 1)
           .map((correctWord: string, index: number) => (
             <span className="relative flex flex-row ml-[1vw]" key={index}>

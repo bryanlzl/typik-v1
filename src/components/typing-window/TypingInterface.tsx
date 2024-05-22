@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import React, { useState, useEffect } from "react";
 import TypeTextRender from "./TypeTextRender";
 import Timer from "./Timer";
-import { useSettingContext } from "../typing_window/SettingsProvider";
-import { RenderTyped, PropTypes, TimeType } from "../types/TypingTypes";
+import useTestSettingsStore from "../../stores/useTestSettingStore/useTestSettingStore";
+import { RenderTyped, PropTypes, TimeType } from "../../types/typingTypes";
 
 const TypingInterface = ({ propPackage }: { propPackage: PropTypes }) => {
   const {
@@ -14,13 +15,13 @@ const TypingInterface = ({ propPackage }: { propPackage: PropTypes }) => {
     time,
     setTime,
   } = propPackage;
-  const { settingContext, setSettingContext } = useSettingContext();
+  const { testSetting } = useTestSettingsStore();
 
   const focusHandler = (): void => {
     setTypingState((prev) => ({ ...prev, focus: !prev.focus }));
   };
 
-  function firstWrongIndex(actualWord: string, typedWord: string) {
+  const firstWrongIndex = (actualWord: string, typedWord: string): number => {
     const minLength = Math.min(actualWord.length, typedWord.length);
     for (let i = 0; i < minLength; i++) {
       if (actualWord[i] !== typedWord[i]) {
@@ -31,14 +32,14 @@ const TypingInterface = ({ propPackage }: { propPackage: PropTypes }) => {
       return -1;
     }
     return minLength;
-  }
+  };
 
   useEffect(() => {
     const rawLenTypedList: number = typingState.typedList.length;
     const actLenTypedList: number = rawLenTypedList + 1;
     const lenWordsTyped: number = wordsTyped.length;
 
-    const wordList: string[] = settingContext.wordList;
+    const wordList: string[] = testSetting.wordList;
     const typedList: string[] = typingState.typedList;
     const correctWord: string = wordList[actLenTypedList - 1];
     const currWord: string = typingState.currentWord;
@@ -68,7 +69,7 @@ const TypingInterface = ({ propPackage }: { propPackage: PropTypes }) => {
       );
     } else if (
       lenWordsTyped < actLenTypedList &&
-      wordsTyped.length != settingContext.wordList.length
+      wordsTyped.length != testSetting.wordList.length
     ) {
       // spacebar => new word //
       setWordsTyped(
@@ -112,7 +113,6 @@ const TypingInterface = ({ propPackage }: { propPackage: PropTypes }) => {
         );
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [typingState]);
 
   const renderTextPrompt = (): JSX.Element => {
@@ -135,7 +135,6 @@ const TypingInterface = ({ propPackage }: { propPackage: PropTypes }) => {
         return { ...prev, status: "running" };
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wordsTyped]);
 
   //console.log(wordsTyped);

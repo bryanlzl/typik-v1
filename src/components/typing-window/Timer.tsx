@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import refreshIcon from "../../public/assets/icons/refresh-icon.svg";
-import clockIcon from "../../public/assets/icons/clock-icon.svg";
+import refreshIcon from "/public/assets/icons/refresh-icon.svg";
+import clockIcon from "/public/assets/icons/clock-icon.svg";
 import {
   PropTypes,
   TimeType,
   TypingSettings,
-  Timer,
-} from "../types/TypingTypes";
+  TimerType,
+} from "../../types/typingTypes";
 
 const Timer = ({ propPackage }: { propPackage: PropTypes }) => {
   const {
@@ -18,7 +18,7 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }) => {
     setWordsTyped,
     typingStateRef,
   } = propPackage;
-  const [timerSetting, setTimerSetting] = useState<Timer>({
+  const [timerSetting, setTimerSetting] = useState<TimerType>({
     duration: 15,
     status: "waiting",
     isSelectTime: false,
@@ -30,7 +30,7 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }) => {
 
   useEffect(() => {
     timeRef.current = time;
-    setTimerSetting((prev: Timer) => {
+    setTimerSetting((prev: TimerType) => {
       return { ...prev, status: time.status };
     });
   }, [time]);
@@ -115,7 +115,7 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }) => {
 
   const onDurationSelect = (duration: number) => {
     clearInterval(timeHandler.current!);
-    setTimerSetting((prev: Timer) => ({
+    setTimerSetting((prev: TimerType) => ({
       ...prev,
       duration: duration,
       isSelectTime: false,
@@ -132,7 +132,7 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }) => {
         <button
           className="flex text-[1.5vw] items-center opacity-60 hover:opacity-100 mr-[4vw]"
           onClick={() => {
-            setTimerSetting((prev: Timer) => {
+            setTimerSetting((prev: TimerType) => {
               return { ...prev, isSelectTime: !prev.isSelectTime };
             });
           }}
@@ -150,7 +150,7 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }) => {
             !timerSetting.isSelectTime && "hidden"
           } absolute z-10 w-[6vw] bg-white divide-y divide-slate-200 rounded-lg shadow-lg shadow-slate-300/50 opacity-[85%]`}
           onMouseLeave={() => {
-            setTimerSetting((prev: Timer) => {
+            setTimerSetting((prev: TimerType) => {
               return { ...prev, isSelectTime: false };
             });
           }}

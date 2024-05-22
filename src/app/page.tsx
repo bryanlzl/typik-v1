@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-import TypingWindow from "@/typing_window/TypingWindow";
+import TypingWindow from "@/components/typing-window/TypingWindow";
 
 function Home() {
   return (

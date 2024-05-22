@@ -47,7 +47,7 @@ export interface ModKeyEvent {
   modEvent: string;
 }
 
-export interface Timer {
+export interface TimerType {
   duration: number;
   status: string; // running, completed, waiting, inactive
   isSelectTime: boolean;
