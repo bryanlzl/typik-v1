@@ -9,7 +9,7 @@ import {
   ModKeyEvent,
   TimeType,
   PropTypes,
-} from "../../types/typingTypes";
+} from "@/types/typingTypes";
 
 // import { top99Words } from "../../static-values/wordAssets";
 import {

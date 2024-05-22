@@ -1,7 +1,7 @@
 "use client";
 import useTestSettingsStore from "../../stores/useTestSettingStore/useTestSettingStore";
-import { RenderTyped, PropTypes, Cursor } from "../../types/typingTypes";
-import TypeSummaryModal from "../test-summary-modal/TypeSummaryModal";
+import { RenderTyped, PropTypes, Cursor } from "@/types/typingTypes";
+import TypeSummaryModal from "./test-summary-modal/TypeSummaryModal";
 
 const TypeTextRender = ({ propPackage }: { propPackage: PropTypes }) => {
   const { testSetting } = useTestSettingsStore();

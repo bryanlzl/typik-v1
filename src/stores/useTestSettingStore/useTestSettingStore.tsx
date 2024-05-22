@@ -1,11 +1,10 @@
 import React, { Dispatch, SetStateAction } from "react";
+import { create } from "zustand";
 import { top99Words } from "../../static-values/wordAssets";
 import {
   defaultMods,
   defaultAllowedKeys,
 } from "../../static-values/modsKeysAllowed";
-
-import { create } from "zustand";
 
 interface TestSetting {
   fontStyle: string;

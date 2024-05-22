@@ -7,7 +7,7 @@ import {
   TimeType,
   TypingSettings,
   TimerType,
-} from "../../types/typingTypes";
+} from "@/types/typingTypes";
 
 const Timer = ({ propPackage }: { propPackage: PropTypes }) => {
   const {

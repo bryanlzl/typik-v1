@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import TypeTextRender from "./TypeTextRender";
 import Timer from "./Timer";
 import useTestSettingsStore from "../../stores/useTestSettingStore/useTestSettingStore";
-import { RenderTyped, PropTypes, TimeType } from "../../types/typingTypes";
+import { RenderTyped, PropTypes, TimeType } from "@/types/typingTypes";
 
 const TypingInterface = ({ propPackage }: { propPackage: PropTypes }) => {
   const {
