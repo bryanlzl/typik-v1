@@ -2,8 +2,8 @@ import { RenderTyped, PropTypes, TypingSettings } from '@/types/typingTypes';
 
 const TypeSummaryModal = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
   const { wordsTyped, setTypingState, setWordsTyped, typingStateRef } = propPackage;
-  let totalCorrectChar = 0;
-  let totalWrongChar = 0;
+  let totalCorrectChar: number = 0;
+  let totalWrongChar: number = 0;
   wordsTyped.forEach((word: RenderTyped, index: number) => {
     if (index === wordsTyped.length - 1) {
       totalCorrectChar +=

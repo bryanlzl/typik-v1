@@ -7,7 +7,7 @@ const TypeTextRender = ({ propPackage }: { propPackage: PropTypes }): JSX.Elemen
   const { testSetting } = useTestSettingsStore();
   const { typingState, wordsTyped } = propPackage;
 
-  const textRenderer = () => {
+  const textRenderer = (): JSX.Element => {
     const lenWordList: number = testSetting.wordList.length;
     const lenWordsTyped: number = wordsTyped.length;
 
