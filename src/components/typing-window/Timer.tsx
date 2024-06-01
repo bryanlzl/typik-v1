@@ -117,7 +117,9 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
 
   return (
     <div className="flex flex-row mx-[1.7vw] cursor-default">
-      {!typingState.isDone && <h2 className="text-[1.5vw] mr-[4vw] opacity-60">{time.duration}</h2>}
+      {!typingState.isDone && (
+        <h2 className="text-[1.5vw] mr-[4vw] opacity-60">{time.duration < 10 ? '0' + time.duration : time.duration}</h2>
+      )}
       <Popover className="flex flex-row">
         <PopoverButton
           className="flex text-[1.5vw] items-center opacity-60 hover:opacity-100 mr-[4vw] focus:outline-none"
@@ -130,12 +132,8 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
         </PopoverButton>
         <Transition
           show={timerSetting.isSelectTime}
-          enter="transition ease-out duration-300"
-          enterFrom="opacity-0 translate-y-1"
-          enterTo="opacity-100 translate-y-0"
-          leave="transition ease-in duration-300"
-          leaveFrom="opacity-100 translate-y-0"
-          leaveTo="opacity-0 translate-y-1"
+          enter="transition ease-out duration-100"
+          leave="transition ease-in duration-100"
         >
           <PopoverPanel
             className="absolute z-10 w-[6vw] bg-white divide-y divide-slate-200 rounded-lg shadow-lg shadow-slate-300/50 opacity-[85%]"

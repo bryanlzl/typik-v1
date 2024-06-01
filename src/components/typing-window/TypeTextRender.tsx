@@ -1,5 +1,6 @@
 'use client';
 import useTestSettingsStore from '../../stores/useTestSettingStore/useTestSettingStore';
+import React, { useState } from 'react';
 import { RenderTyped, PropTypes, Cursor } from '@/types/typingTypes';
 import TypeSummaryModal from './test-summary-modal/TypeSummaryModal';
 
@@ -66,6 +67,7 @@ const TypeTextRender = ({ propPackage }: { propPackage: PropTypes }): JSX.Elemen
             <span className="flex flex-row">
               {typedWord.actual.split('').map((actualChar: string, charIndex: number) => (
                 <span key={index + ':' + charIndex} className="relative flex flex-row">
+                  {/* TYPED CHAR */}
                   {cursorRender('body', index, charIndex)}
                   <p
                     className={`pl-[0.05vw] ${
@@ -76,18 +78,17 @@ const TypeTextRender = ({ propPackage }: { propPackage: PropTypes }): JSX.Elemen
                   >
                     {actualChar}
                   </p>{' '}
-                  {/* TYPED CHAR */}
                 </span>
               ))}
             </span>
             <span className="flex flex-row text-red-700">
               {typedWord.excess.split('').map((excessChar: string, charExIndex: number) => (
                 <span key={index + ':' + charExIndex} className="flex flex-row">
+                  {/* EXCESS CHAR */}
                   <p className="relative pl-[0.05vw]">
                     {excessChar}
                     {cursorRender('excess', index, charExIndex)}
                   </p>{' '}
-                  {/* EXCESS CHAR */}
                 </span>
               ))}
             </span>
@@ -98,13 +99,13 @@ const TypeTextRender = ({ propPackage }: { propPackage: PropTypes }): JSX.Elemen
             <span className="flex flex-row">
               {correctWord.split('').map((actualChar: string, charIndex: number) => (
                 <span key={index + ':' + charIndex} className="flex flex-row">
+                  {/* UNTYPED CHAR */}
                   <p
                     className={`relative pl-[0.05vw]
                       }`}
                   >
                     {actualChar}
                   </p>{' '}
-                  {/* UNTYPED CHAR */}
                 </span>
               ))}
             </span>{' '}

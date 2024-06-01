@@ -33,7 +33,6 @@ const TypingInterface = ({ propPackage }: { propPackage: PropTypes }): JSX.Eleme
     const lenWordsTyped: number = wordsTyped.length;
 
     const wordList: string[] = testSetting.wordList;
-    const typedList: string[] = typingState.typedList;
     const correctWord: string = wordList[actLenTypedList - 1];
     const currWord: string = typingState.currentWord;
     const typedWord = typingState.cursorPosition > 0 ? currWord : '';

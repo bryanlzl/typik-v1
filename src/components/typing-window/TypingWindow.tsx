@@ -4,7 +4,7 @@ import TypingInterface from './TypingInterface';
 import useTestSettingsStore from '../../stores/useTestSettingStore/useTestSettingStore';
 import { RenderTyped, Setting, TypingSettings, ModKeyEvent, TimeType, PropTypes } from '@/types/typingTypes';
 
-// import { top99Words } from "../../static-values/wordAssets";
+// import { top100Words } from "../../static-values/wordAssets";
 import {
   // defaultMods,
   // defaultAllowedKeys,
@@ -14,9 +14,6 @@ import {
 
 const TypingWindow = (): JSX.Element => {
   const { testSetting } = useTestSettingsStore();
-
-  // --- Typing test settings --- //
-  const [useSettings, setSettings] = useState<Setting>(testSetting);
 
   // --- Typing test state --- //
   const [typingState, setTypingState] = useState<TypingSettings>({
@@ -39,6 +36,12 @@ const TypingWindow = (): JSX.Element => {
   });
   const [wordsTyped, setWordsTyped] = useState<RenderTyped[]>([]);
 
+  // --- Initial test time --- //
+  const [time, setTime] = useState<TimeType>({
+    duration: 15,
+    status: 'inactive',
+  });
+
   // --- Typing test word list and constraints --- //
   const wordList: string[] = testSetting.wordList;
   const allowedMods: Set<string> = testSetting.allowedMods;
@@ -47,12 +50,6 @@ const TypingWindow = (): JSX.Element => {
   // --- add alphanumeric chars --- //
   // lower: boolean, upper: boolean, num: boolean //
   const allowedKeys: Set<string> = handleIncludeAlphaNums(testSetting.allowedKeys, true, true, true);
-
-  // --- Initial test time --- //
-  const [time, setTime] = useState<TimeType>({
-    duration: 15,
-    status: 'inactive',
-  });
 
   // --- Initialize props for child components --- //
   const propPackage: PropTypes = {
@@ -73,7 +70,7 @@ const TypingWindow = (): JSX.Element => {
     const prevTypedList: string[] = typing.current.typedList;
     const lenTypedList: number = typing.current.typedList.length;
 
-    if (lenTypedList == useSettings.wordList.length) {
+    if (lenTypedList == testSetting.wordList.length) {
       typing.current.isDone = true;
       setTypingState((prev) => ({ ...prev, isDone: true }));
     } else if (keyType === 'keydown' && allowedKeys.has(keyPress)) {
