@@ -16,6 +16,10 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
   const timeHandler = useRef<NodeJS.Timeout | null>(null);
   const timeRef = useRef<TimeType>(time);
 
+  const focusHandler = (): void => {
+    setTypingState((prev) => ({ ...prev, focus: !prev.focus }));
+  };
+
   const resetWordHandler = (): void => {
     setTypingState({
       focus: false,
@@ -56,12 +60,13 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
     clearInterval(timeHandler.current!);
     setTimerSetting((prev: TimerType) => ({
       ...prev,
+      status: 'waiting',
       duration: duration,
       isSelectTime: false,
     }));
-    timeRef.current.status = time.status;
+    timeRef.current.status = 'waiting';
     timeRef.current.duration = duration;
-    setTime((prev: TimeType) => ({ ...prev, duration: duration }));
+    setTime((prev: TimeType) => ({ ...prev, status: 'waiting', duration: duration }));
     resetWordHandler();
   };
 
@@ -81,7 +86,7 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
 
   // ----- Monitor current status of timer and test ----- //
   useEffect(() => {
-    const tick = () => {
+    const tick = (): void => {
       if (
         timeRef.current.status === 'waiting' ||
         timeRef.current.status === 'inactive' ||
@@ -98,7 +103,7 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
         timeHandler.current = setTimeout(tick, 1000);
       } else {
         resetTestHandler();
-        setTimerSetting((prev) => ({ ...prev, status: 'completed' }));
+        setTimerSetting((prev: TimerType) => ({ ...prev, status: 'completed' }));
         setTime({
           duration: timerSetting.duration,
           status: 'completed',
@@ -127,14 +132,12 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
         >
           <Image className="w-[1.7vw]" src={clockIcon} alt="clock-icon" />
           {timerSetting.duration !== 0 && (
-            <p className="text-[0.7vw] font-medium pb-[0.2vw] self-end">{timerSetting.duration + 's'}</p>
+            <p className="text-[0.7vw] font-medium pb-[0.2vw] self-end">
+              {(timerSetting.duration < 10 ? '0' + timerSetting.duration : timerSetting.duration) + 's'}
+            </p>
           )}
         </PopoverButton>
-        <Transition
-          show={timerSetting.isSelectTime}
-          enter="transition ease-out duration-100"
-          leave="transition ease-in duration-100"
-        >
+        <Transition show={timerSetting.isSelectTime}>
           <PopoverPanel
             className="absolute z-10 w-[6vw] bg-white divide-y divide-slate-200 rounded-lg shadow-lg shadow-slate-300/50 opacity-[85%]"
             onMouseLeave={handleDisplayTimeSelector}
@@ -145,6 +148,7 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
                   <span
                     className="block px-[0.5vw] py-[0.4vw] transition hover:bg-slate-200 text-center cursor-pointer text-[0.8vw]"
                     onClick={() => {
+                      // resetAllHandler();
                       onDurationSelect(duration);
                     }}
                   >

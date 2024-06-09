@@ -25,7 +25,7 @@ const useTestSettingsStore = create<useTestSettingsProps>((set) => ({
   testSetting: {
     fontStyle: 'verdana',
     mode: 'unlimited',
-    wordList: ['hello', 'world'], // empty wordList here once wordList RNG has been created on unlimited mode
+    wordList: InitWordDict, // empty wordList here once wordList RNG has been created on unlimited mode
     wordDict: InitWordDict,
     duration: 30,
     allowedMods: defaultMods,
@@ -33,7 +33,7 @@ const useTestSettingsStore = create<useTestSettingsProps>((set) => ({
   },
 
   setTestSetting: (amendedSetting: TestSetting) => {
-    set((state) => {
+    set((state: useTestSettingsProps) => {
       return { ...state, editProjectSetting: amendedSetting };
     });
   },

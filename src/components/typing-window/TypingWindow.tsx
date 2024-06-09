@@ -159,7 +159,7 @@ const TypingWindow = (): JSX.Element => {
         window.removeEventListener('keyup', handleKeyPress);
       };
     }
-  }, [time, setTime]);
+  }, [typing.current.focus]);
 
   useEffect(() => {
     typing.current.focus = typingState.focus;
@@ -170,8 +170,6 @@ const TypingWindow = (): JSX.Element => {
       };
     });
   }, [typingState.focus]);
-
-  //console.log(time.status, typing.current.focus, typingState.focus);
 
   return (
     <main className="flex flex-col justify-center items-center my-[30px] select-none">

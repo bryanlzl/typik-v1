@@ -27,6 +27,18 @@ const TypingInterface = ({ propPackage }: { propPackage: PropTypes }): JSX.Eleme
     return minLength;
   };
 
+  const renderTextPrompt = (): JSX.Element => {
+    return (
+      <div
+        className={`absolute flex flex-row justify-center w-[100%] h-[100%] rounded-lg items-center ${
+          (typingState.focus || typingState.isDone) && 'hidden'
+        }`}
+      >
+        <span className="h-min font-[Verdana] text-[1.2vw] align-bottom">Click on text and start typing to begin</span>
+      </div>
+    );
+  };
+
   useEffect(() => {
     const rawLenTypedList: number = typingState.typedList.length;
     const actLenTypedList: number = rawLenTypedList + 1;
@@ -92,18 +104,6 @@ const TypingInterface = ({ propPackage }: { propPackage: PropTypes }): JSX.Eleme
       }
     }
   }, [typingState]);
-
-  const renderTextPrompt = (): JSX.Element => {
-    return (
-      <div
-        className={`absolute flex flex-row justify-center w-[100%] h-[100%] rounded-lg items-center ${
-          (typingState.focus || typingState.isDone) && 'hidden'
-        }`}
-      >
-        <span className="h-min font-[Verdana] text-[1.2vw] align-bottom">Click on text and start typing to begin</span>
-      </div>
-    );
-  };
 
   useEffect(() => {
     if (wordsTyped[0]?.typed.length > 0 && time.status !== 'completed') {
