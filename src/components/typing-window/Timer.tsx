@@ -9,7 +9,7 @@ import { timeOptions } from '@/static-values/timeOptions';
 const Timer = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
   const { time, typingState, setTime, setTypingState, setWordsTyped, typingStateRef } = propPackage;
   const [timerSetting, setTimerSetting] = useState<TimerType>({
-    duration: 15,
+    duration: 30,
     status: 'waiting',
     isSelectTime: false,
   });
@@ -127,8 +127,9 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
       )}
       <Popover className="flex flex-row">
         <PopoverButton
-          className="flex text-[1.5vw] items-center opacity-60 hover:opacity-100 mr-[4vw] focus:outline-none"
-          onClick={handleDisplayTimeSelector}
+          className="flex text-[1.5vw] mr-[4vw] items-center opacity-60 focus:outline-none"
+          // hover:opacity-100
+          // onClick={handleDisplayTimeSelector}
         >
           <Image className="w-[1.7vw]" src={clockIcon} alt="clock-icon" />
           {timerSetting.duration !== 0 && (
