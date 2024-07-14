@@ -38,7 +38,7 @@ const TypingWindow = (): JSX.Element => {
 
   // --- Initial test time --- //
   const [time, setTime] = useState<TimeType>({
-    duration: 15,
+    duration: 30,
     status: 'inactive',
   });
 
