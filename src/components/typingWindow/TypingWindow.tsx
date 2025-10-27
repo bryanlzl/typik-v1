@@ -1,8 +1,7 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import TypingInterface from './TypingInterface';
-import useTestSettingsStore from '../../stores/useTestSettingStore/useTestSettingStore';
-import { RenderTyped, Setting, TypingSettings, ModKeyEvent, TimeType, PropTypes } from '@/types/typingTypes';
+import { RenderTyped, TypingSettings, ModKeyEvent, TimeType, PropTypes } from '@/types/typingTypes';
 
 // import { top100Words } from "../../static-values/wordAssets";
 import {
@@ -10,7 +9,8 @@ import {
   // defaultAllowedKeys,
   defaultPunctuationMarks,
   handleIncludeAlphaNums,
-} from '../../static-values/modsKeysAllowed';
+} from '../../staticValues/modsKeysAllowed';
+import useTestSettingsStore from '@/stores/useTestSettingStore';
 
 const TypingWindow = (): JSX.Element => {
   const { testSetting } = useTestSettingsStore();

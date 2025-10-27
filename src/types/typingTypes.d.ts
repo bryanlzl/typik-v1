@@ -1,5 +1,3 @@
-// TypingTypes.ts
-
 export interface Setting {
   fontStyle: string;
   wordList: string[]; // Correct text

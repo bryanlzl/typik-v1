@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import TypeTextRender from './TypeTextRender';
 import Timer from './Timer';
-import useTestSettingsStore from '../../stores/useTestSettingStore/useTestSettingStore';
 import { RenderTyped, PropTypes, TimeType } from '@/types/typingTypes';
+import useTestSettingsStore from '@/stores/useTestSettingStore';
 
 const TypingInterface = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
   const { wordsTyped, setWordsTyped, typingState, setTypingState, time, setTime } = propPackage;

@@ -1,8 +1,8 @@
 'use client';
-import useTestSettingsStore from '../../stores/useTestSettingStore/useTestSettingStore';
-import React, { useState } from 'react';
+import React from 'react';
 import { RenderTyped, PropTypes, Cursor } from '@/types/typingTypes';
-import TypeSummaryModal from './test-summary-modal/TypeSummaryModal';
+import TypeSummaryModal from './testSummaryModal/TypeSummaryModal';
+import useTestSettingsStore from '@/stores/useTestSettingStore';
 
 const TypeTextRender = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
   const { testSetting } = useTestSettingsStore();

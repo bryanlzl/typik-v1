@@ -1,7 +1,7 @@
+import { defaultAllowedKeys, defaultMods } from '@/staticValues/modsKeysAllowed';
+import { top100Words } from '@/staticValues/wordAssets';
 import React, { Dispatch, SetStateAction } from 'react';
 import { create } from 'zustand';
-import { top100Words } from '../../static-values/wordAssets';
-import { defaultMods, defaultAllowedKeys } from '../../static-values/modsKeysAllowed';
 
 interface TestSetting {
   fontStyle: string;
