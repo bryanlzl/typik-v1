@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { RenderTyped, PropTypes, Cursor } from '@/types/typingTypes';
-import TypeSummaryModal from './testSummaryModal/TypeSummaryModal';
+import TypeSummaryModal from '../testSummaryModal/TypeSummaryModal';
 import useTestSettingsStore from '@/stores/useTestSettingStore';
 
 const TypeTextRender = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
