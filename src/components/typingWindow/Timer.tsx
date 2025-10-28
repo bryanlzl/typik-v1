@@ -4,7 +4,7 @@ import refreshIcon from '/public/assets/icons/refresh-icon.svg';
 import clockIcon from '/public/assets/icons/clock-icon.svg';
 import { PropTypes, TimeType, TypingSettings, TimerType } from '@/types/typingTypes';
 import { Button, Popover, PopoverButton, PopoverPanel, Transition } from '@headlessui/react';
-import { timeOptions } from '@/staticValues/timeOptions';
+import { timeOptions } from '@/configs/timeOptions';
 
 const Timer = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
   const { time, typingState, setTime, setTypingState, setWordsTyped, typingStateRef } = propPackage;

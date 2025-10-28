@@ -1,5 +1,5 @@
-import { defaultAllowedKeys, defaultMods } from '@/staticValues/modsKeysAllowed';
-import { top100Words } from '@/staticValues/wordAssets';
+import { defaultAllowedKeys, defaultMods } from '@/configs/allowedKeys';
+import { top100Words } from '@/configs/wordAssets';
 import React, { Dispatch, SetStateAction } from 'react';
 import { create } from 'zustand';
 

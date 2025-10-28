@@ -9,7 +9,7 @@ import {
   // defaultAllowedKeys,
   defaultPunctuationMarks,
   handleIncludeAlphaNums,
-} from '../../staticValues/modsKeysAllowed';
+} from '../../configs/allowedKeys';
 import useTestSettingsStore from '@/stores/useTestSettingStore';
 
 const TypingWindow = (): JSX.Element => {
