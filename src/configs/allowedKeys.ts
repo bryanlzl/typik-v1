@@ -1,10 +1,9 @@
-// --- DEFAULT SETTINGS --- //
 export const defaultMods: Set<string> = new Set(['Backspace', ' ', 'CapsLock', 'Control', 'Shift', 'Escape']);
 
-// Addition of all other characters
+// addition of other keys
 export const defaultAllowedKeys: Set<string> = new Set(['Backspace', ' ', 'CapsLock', 'Control', 'Shift', 'Escape']);
 
-// Allow common punctuation marks
+// common punctuation marks
 export const defaultPunctuationMarks: string[] = [
   '!',
   '@',

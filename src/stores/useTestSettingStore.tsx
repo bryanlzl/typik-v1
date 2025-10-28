@@ -1,6 +1,5 @@
 import { defaultAllowedKeys, defaultMods } from '@/configs/allowedKeys';
-import { top100Words } from '@/configs/wordAssets';
-import React, { Dispatch, SetStateAction } from 'react';
+import { top100Words } from '@/configs/words';
 import { create } from 'zustand';
 
 interface TestSetting {
