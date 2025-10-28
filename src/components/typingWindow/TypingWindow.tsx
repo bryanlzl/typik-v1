@@ -3,11 +3,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import TypingInterface from './TypingInterface';
 import { RenderTyped, TypingSettings, ModKeyEvent, TimeType, PropTypes } from '@/types/typingTypes';
 
-// import { top100Words } from "../../static-values/wordAssets";
+// import { WORDS_TOP_100 } from "../../static-values/wordAssets";
 import {
-  // defaultMods,
-  // defaultAllowedKeys,
-  defaultPunctuationMarks,
+  // DEFAULT_MODS,
+  // DEFAULT_ALLOWED_KEYS,
+  DEFAULT_PUNCTUATIONS,
   handleIncludeAlphaNums,
 } from '../../configs/allowedKeys';
 import useTestSettingsStore from '@/stores/useTestSettingStore';
@@ -45,7 +45,7 @@ const TypingWindow = (): JSX.Element => {
   // --- Typing test word list and constraints --- //
   const wordList: string[] = testSetting.wordList;
   const allowedMods: Set<string> = testSetting.allowedMods;
-  const punctuationMarks: string[] = defaultPunctuationMarks;
+  const punctuationMarks: string[] = DEFAULT_PUNCTUATIONS;
 
   // --- add alphanumeric chars --- //
   // lower: boolean, upper: boolean, num: boolean //

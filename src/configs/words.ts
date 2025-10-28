@@ -1,4 +1,4 @@
-export const top100Words: string[] = [
+export const WORDS_TOP_100: string[] = [
   'the',
   'be',
   'to',

@@ -1,5 +1,5 @@
-import { defaultAllowedKeys, defaultMods } from '@/configs/allowedKeys';
-import { top100Words } from '@/configs/words';
+import { DEFAULT_ALLOWED_KEYS, DEFAULT_MODS } from '@/configs/allowedKeys';
+import { WORDS_TOP_100 } from '@/configs/words';
 import { create } from 'zustand';
 
 interface TestSetting {
@@ -18,7 +18,7 @@ interface useTestSettingsProps {
 }
 
 // --- PLACEHOLDER TOP 100 WORDS --- //
-const InitWordDict: string[] = top100Words;
+const InitWordDict: string[] = WORDS_TOP_100;
 
 const useTestSettingsStore = create<useTestSettingsProps>((set) => ({
   testSetting: {
@@ -27,8 +27,8 @@ const useTestSettingsStore = create<useTestSettingsProps>((set) => ({
     wordList: InitWordDict, // empty wordList here once wordList RNG has been created on unlimited mode
     wordDict: InitWordDict,
     duration: 30,
-    allowedMods: defaultMods,
-    allowedKeys: defaultAllowedKeys,
+    allowedMods: DEFAULT_MODS,
+    allowedKeys: DEFAULT_ALLOWED_KEYS,
   },
 
   setTestSetting: (amendedSetting: TestSetting) => {

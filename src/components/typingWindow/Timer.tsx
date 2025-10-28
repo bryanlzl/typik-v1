@@ -4,7 +4,7 @@ import refreshIcon from '/public/assets/icons/refresh-icon.svg';
 import clockIcon from '/public/assets/icons/clock-icon.svg';
 import { PropTypes, TimeType, TypingSettings, TimerType } from '@/types/typingTypes';
 import { Button, Popover, PopoverButton, PopoverPanel, Transition } from '@headlessui/react';
-import { timeOptions } from '@/configs/durations';
+import { OPTIONS_TYPING_DURATION } from '@/configs/durations';
 
 const Timer = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
   const { time, typingState, setTime, setTypingState, setWordsTyped, typingStateRef } = propPackage;
@@ -144,7 +144,7 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
             onMouseLeave={handleDisplayTimeSelector}
           >
             <ul className="py-2 text-sm text-black">
-              {timeOptions.map((duration, index) => (
+              {OPTIONS_TYPING_DURATION.map((duration, index) => (
                 <li key={index}>
                   <span
                     className="block px-[0.5vw] py-[0.4vw] transition hover:bg-slate-200 text-center cursor-pointer text-[0.8vw]"
