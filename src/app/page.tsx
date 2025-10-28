@@ -1,12 +1,12 @@
 import TypingWindow from '@/components/typingWindow/TypingWindow';
 import '../styles/globals.css';
 
-function Home() {
+const Page = (): JSX.Element => {
   return (
     <main>
       <TypingWindow></TypingWindow>
     </main>
   );
-}
+};
 
-export default Home;
+export default Page;

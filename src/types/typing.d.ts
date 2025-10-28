@@ -1,6 +1,6 @@
 export interface Setting {
   fontStyle: string;
-  wordList: string[]; // Correct text
+  wordList: string[]; // correct text
   duration: number;
   allowedMods: Set<string>;
   allowedKeys: Set<string>;
@@ -9,13 +9,13 @@ export interface Setting {
 export interface TypingSettings {
   focus: Boolean;
   currentWord: string;
-  typedList: string[]; // User's typed text
+  typedList: string[]; // user's typed text
   cursorPosition: number;
   isDone: Boolean;
 }
 
 export interface RenderTyped {
-  // Store rendered text (and validation)
+  // store rendered text (+ validation)
   actual: string;
   typed: string;
   excess: string;

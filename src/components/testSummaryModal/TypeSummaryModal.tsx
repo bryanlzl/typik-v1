@@ -1,4 +1,4 @@
-import { RenderTyped, PropTypes } from '@/types/typingTypes';
+import { RenderTyped, PropTypes } from '@/types/typing';
 
 const TypeSummaryModal = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
   const { wordsTyped, setTypingState, setWordsTyped, typingStateRef } = propPackage;

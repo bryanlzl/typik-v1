@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import refreshIcon from '/public/assets/icons/refresh-icon.svg';
 import clockIcon from '/public/assets/icons/clock-icon.svg';
-import { PropTypes, TimeType, TypingSettings, TimerType } from '@/types/typingTypes';
+import { PropTypes, TimeType, TypingSettings, TimerType } from '@/types/typing';
 import { Button, Popover, PopoverButton, PopoverPanel, Transition } from '@headlessui/react';
 import { OPTIONS_TYPING_DURATION } from '@/configs/durations';
 
@@ -92,14 +92,14 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
         timeRef.current.status === 'inactive' ||
         timeRef.current.status === 'completed'
       ) {
-        // Do nothing
+        // do nothing
       } else if (timeRef.current.duration > 1) {
         timeRef.current.duration -= 1;
         setTime({
           status: timeRef.current.status,
           duration: timeRef.current.duration,
         });
-        // Schedule the next tick after 1 second
+        // schedule the next tick after 1 second
         timeHandler.current = setTimeout(tick, 1000);
       } else {
         resetTestHandler();
@@ -171,10 +171,3 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
 };
 
 export default Timer;
-
-// console.log(
-//   timeRef.current.status,
-//   time.status,
-//   timerSetting.status,
-//   timeRef.current.duration
-// );

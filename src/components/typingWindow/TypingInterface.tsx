@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import TypeTextRender from './TypeTextRender';
 import Timer from './Timer';
-import { RenderTyped, PropTypes, TimeType } from '@/types/typingTypes';
+import { RenderTyped, PropTypes, TimeType } from '@/types/typing';
 import useTestSettingsStore from '@/stores/useTestSettingStore';
 
 const TypingInterface = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {

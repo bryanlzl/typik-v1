@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { RenderTyped, PropTypes, Cursor } from '@/types/typingTypes';
+import { RenderTyped, PropTypes, Cursor } from '@/types/typing';
 import TypeSummaryModal from '../testSummaryModal/TypeSummaryModal';
 import useTestSettingsStore from '@/stores/useTestSettingStore';
 

@@ -1,15 +1,15 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode } from 'react';
 
 export const metadata = {
-  title: "Typik | A simple user-friendly typing experience",
-  description: "Typik is a typing trainer and test web app",
+  title: 'Typik | A simple user-friendly typing experience',
+  description: 'Typik is a typing trainer and test web app',
 };
 
 interface RootLayoutProps {
   children: ReactNode;
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+const Layout = ({ children }: RootLayoutProps) => {
   return (
     <html lang="en">
       <head>
@@ -18,4 +18,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body suppressHydrationWarning={true}>{children}</body>
     </html>
   );
-}
+};
+
+export default Layout;
