@@ -5,11 +5,7 @@ export const metadata = {
   description: 'Typik is a typing trainer and test web app',
 };
 
-interface RootLayoutProps {
-  children: ReactNode;
-}
-
-const Layout = ({ children }: RootLayoutProps) => {
+const Layout = ({ children }: { children: ReactNode }): JSX.Element => {
   return (
     <html lang="en">
       <head>
