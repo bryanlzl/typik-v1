@@ -3,12 +3,13 @@ import React from 'react';
 import { RenderTyped, PropTypes, Cursor } from '@/types/typing';
 import TypeSummaryModal from '../testSummaryModal/TypeSummaryModal';
 import useTestSettingsStore from '@/stores/useTestSettingStore';
+import TypingCursor from '@/components/typingWindow/TypingCursor';
 
 const TypeTextRender = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
   const { testSetting } = useTestSettingsStore();
   const { typingState, wordsTyped } = propPackage;
 
-  const textRenderer = (): JSX.Element => {
+  const renderText = (): JSX.Element => {
     const lenWordList: number = testSetting.wordList.length;
     const lenWordsTyped: number = wordsTyped.length;
 
@@ -20,33 +21,6 @@ const TypeTextRender = ({ propPackage }: { propPackage: PropTypes }): JSX.Elemen
         : wordsTyped[lenWordsTyped - 1]?.actual.length
         ? wordsTyped[lenWordsTyped - 1]?.typed.length - 1
         : 0;
-
-    const cursorRender = (position: string, index: number, charIndex: number): JSX.Element | any => {
-      if (position === 'body') {
-        return (
-          cursorPosition.wordIndex === index &&
-          !cursorPosition.isExcess &&
-          typingState.currentWord &&
-          cursorPosition.wordPosition == charIndex && (
-            <span className="absolute animate-blink-cursor right-[-0.23vw]">|</span>
-          )
-        );
-      } else if (position === 'front') {
-        return (
-          wordsTyped[lenWordsTyped - 1].typed.length === 0 &&
-          cursorPosition.wordIndex === index && <span className="absolute animate-blink-cursor left-[-0.2vw]">|</span>
-        );
-      } else if (position === 'excess') {
-        return (
-          cursorPosition.wordIndex === index &&
-          cursorPosition.isExcess &&
-          typingState.currentWord &&
-          cursorPosition.wordPosition == charIndex && (
-            <span className="absolute animate-blink-cursor text-black right-[-0.23vw]">|</span>
-          )
-        );
-      }
-    };
 
     let cursorPosition: Cursor = {
       wordIndex: lenWordsTyped ? lenWordsTyped - 1 : 0,
@@ -63,21 +37,37 @@ const TypeTextRender = ({ propPackage }: { propPackage: PropTypes }): JSX.Elemen
       >
         {wordsTyped.map((typedWord: RenderTyped, index: number) => (
           <span key={index} className={`relative flex flex-row ml-[1vw]`}>
-            {cursorRender('front', index, -1)}
+            <TypingCursor
+              position="front"
+              index={index}
+              charIndex={-1}
+              typingState={typingState}
+              lenWordsTyped={lenWordsTyped}
+              wordsTyped={wordsTyped}
+              cursorPosition={cursorPosition}
+            />
             <span className="flex flex-row">
               {typedWord.actual.split('').map((actualChar: string, charIndex: number) => (
                 <span key={index + ':' + charIndex} className="relative flex flex-row">
                   {/* TYPED CHAR */}
-                  {cursorRender('body', index, charIndex)}
+                  <TypingCursor
+                    position="body"
+                    index={index}
+                    charIndex={charIndex}
+                    typingState={typingState}
+                    lenWordsTyped={lenWordsTyped}
+                    wordsTyped={wordsTyped}
+                    cursorPosition={cursorPosition}
+                  />
                   <p
                     className={`pl-[0.05vw] ${
-                      wordsTyped[index].isCorrect || wordsTyped[index].incorrectIndex - 1 >= charIndex
-                        ? ''
-                        : 'text-red-700'
+                      !wordsTyped[index].isCorrect &&
+                      !(wordsTyped[index].incorrectIndex - 1 >= charIndex) &&
+                      'text-red-700'
                     }`}
                   >
                     {actualChar}
-                  </p>{' '}
+                  </p>
                 </span>
               ))}
             </span>
@@ -87,8 +77,16 @@ const TypeTextRender = ({ propPackage }: { propPackage: PropTypes }): JSX.Elemen
                   {/* EXCESS CHAR */}
                   <p className="relative pl-[0.05vw]">
                     {excessChar}
-                    {cursorRender('excess', index, charExIndex)}
-                  </p>{' '}
+                    <TypingCursor
+                      position="excess"
+                      index={index}
+                      charIndex={charExIndex}
+                      typingState={typingState}
+                      lenWordsTyped={lenWordsTyped}
+                      wordsTyped={wordsTyped}
+                      cursorPosition={cursorPosition}
+                    />
+                  </p>
                 </span>
               ))}
             </span>
@@ -105,7 +103,7 @@ const TypeTextRender = ({ propPackage }: { propPackage: PropTypes }): JSX.Elemen
                       }`}
                   >
                     {actualChar}
-                  </p>{' '}
+                  </p>
                 </span>
               ))}
             </span>{' '}
@@ -118,7 +116,7 @@ const TypeTextRender = ({ propPackage }: { propPackage: PropTypes }): JSX.Elemen
   return (
     <div>
       <div className="flex flex-wrap flex-row max-w-[50vw] text-[1.5vw]">
-        {!typingState.isDone ? textRenderer() : <TypeSummaryModal propPackage={propPackage} />}
+        {!typingState.isDone ? renderText() : <TypeSummaryModal propPackage={propPackage} />}
       </div>
     </div>
   );
