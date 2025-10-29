@@ -113,8 +113,6 @@ const Interface = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => 
     }
   }, [wordsTyped]);
 
-  //console.log(wordsTyped);
-
   return (
     <div className={`cursor-pointer py-[10px]`}>
       <Timer propPackage={propPackage} />

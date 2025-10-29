@@ -2,8 +2,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import TypingInterface from './Interface';
 import { RenderTyped, TypingSettings, ModKeyEvent, TimeType, PropTypes } from '@/types/typing';
-
-// import { WORDS_TOP_100 } from "../../static-values/wordAssets";
 import {
   // DEFAULT_MODS,
   // DEFAULT_ALLOWED_KEYS,

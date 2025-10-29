@@ -17,15 +17,12 @@ interface useTestSettingsProps {
   setTestSetting: (testSetting: TestSetting) => void;
 }
 
-// --- PLACEHOLDER TOP 100 WORDS --- //
-const InitWordDict: string[] = WORDS_TOP_100;
-
 const useTestSettingsStore = create<useTestSettingsProps>((set) => ({
   testSetting: {
     fontStyle: 'verdana',
     mode: 'unlimited',
-    wordList: InitWordDict, // empty wordList here once wordList RNG has been created on unlimited mode
-    wordDict: InitWordDict,
+    wordList: WORDS_TOP_100, // empty wordList here once wordList RNG has been created on unlimited mode
+    wordDict: WORDS_TOP_100,
     duration: 30,
     allowedMods: DEFAULT_MODS,
     allowedKeys: DEFAULT_ALLOWED_KEYS,
