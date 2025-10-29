@@ -1,7 +1,7 @@
 import { RenderTyped, PropTypes } from '@/types/typing';
 
 const ModalTypeSummary = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
-  const { wordsTyped, setTypingState, setWordsTyped, typingStateRef } = propPackage;
+  const { wordsTyped } = propPackage;
   let totalCorrectChar: number = 0;
   let totalWrongChar: number = 0;
   wordsTyped.forEach((word: RenderTyped, index: number) => {

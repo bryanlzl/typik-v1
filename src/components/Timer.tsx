@@ -76,7 +76,7 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
     });
   };
 
-  // ----- Sync current status with timerSetting zustand state ----- //
+  // ----- sync current status with timerSetting zustand state ----- //
   useEffect(() => {
     timeRef.current = time;
     setTimerSetting((prev: TimerType) => {
@@ -84,7 +84,7 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
     });
   }, [time]);
 
-  // ----- Monitor current status of timer and test ----- //
+  // ----- monitor current status of timer and test ----- //
   useEffect(() => {
     const tick = (): void => {
       if (

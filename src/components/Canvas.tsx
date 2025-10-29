@@ -31,14 +31,16 @@ const Canvas = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
   return (
     <div>
       <div className="flex flex-wrap flex-row max-w-[50vw] text-[1.5vw]">
-        {!typingState.isDone ? (
+        {typingState.isDone ? (
+          <ModalTypeSummary propPackage={propPackage} />
+        ) : (
           <div
             className={`flex flex-row flex-wrap p-[0.7vw] rounded-lg ${
               !(typingState.focus || typingState.isDone) && 'blur-sm'
             }`}
           >
             {wordsTyped.map((typedWord: RenderTyped, index: number) => (
-              <span key={index} className={`relative flex flex-row ml-[1vw]`}>
+              <span key={index} className="relative flex flex-row ml-[1vw]">
                 <TypingCursor
                   position="front"
                   index={index}
@@ -100,20 +102,13 @@ const Canvas = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
                   {correctWord.split('').map((actualChar: string, charIndex: number) => (
                     <span key={index + ':' + charIndex} className="flex flex-row">
                       {/* UNTYPED CHAR */}
-                      <p
-                        className={`relative pl-[0.05vw]
-                      }`}
-                      >
-                        {actualChar}
-                      </p>
+                      <p className="relative pl-[0.05vw]">{actualChar}</p>
                     </span>
                   ))}
                 </span>{' '}
               </span>
             ))}
           </div>
-        ) : (
-          <ModalTypeSummary propPackage={propPackage} />
         )}
       </div>
     </div>

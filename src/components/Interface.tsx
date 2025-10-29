@@ -114,7 +114,7 @@ const Interface = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => 
   }, [wordsTyped]);
 
   return (
-    <div className={`cursor-pointer py-[10px]`}>
+    <div className="cursor-pointer py-[10px]">
       <Timer propPackage={propPackage} />
       <div className="relative rounded-lg" onClick={focusHandler}>
         {renderTextPrompt()}
