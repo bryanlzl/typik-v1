@@ -1,11 +1,11 @@
 'use client';
 import React from 'react';
 import { RenderTyped, PropTypes, Cursor } from '@/types/typing';
-import TypeSummaryModal from '../testSummaryModal/TypeSummaryModal';
 import useTestSettingsStore from '@/stores/useTestSettingStore';
-import TypingCursor from '@/components/typingWindow/TypingCursor';
+import TypingCursor from '@/components/TypingCursor';
+import ModalTypeSummary from '@/components/ModalTypeSummary';
 
-const TypeTextRender = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
+const Canvas = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
   const { testSetting } = useTestSettingsStore();
   const { typingState, wordsTyped } = propPackage;
 
@@ -113,11 +113,11 @@ const TypeTextRender = ({ propPackage }: { propPackage: PropTypes }): JSX.Elemen
             ))}
           </div>
         ) : (
-          <TypeSummaryModal propPackage={propPackage} />
+          <ModalTypeSummary propPackage={propPackage} />
         )}
       </div>
     </div>
   );
 };
 
-export default TypeTextRender;
+export default Canvas;

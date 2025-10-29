@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import React, { useEffect } from 'react';
-import TypeTextRender from './TypeTextRender';
-import Timer from './Timer';
 import { RenderTyped, PropTypes, TimeType } from '@/types/typing';
 import useTestSettingsStore from '@/stores/useTestSettingStore';
+import Timer from '@/components/Timer';
+import Canvas from '@/components/Canvas';
 
-const TypingInterface = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
+const Interface = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
   const { wordsTyped, setWordsTyped, typingState, setTypingState, time, setTime } = propPackage;
   const { testSetting } = useTestSettingsStore();
 
@@ -120,10 +120,10 @@ const TypingInterface = ({ propPackage }: { propPackage: PropTypes }): JSX.Eleme
       <Timer propPackage={propPackage} />
       <div className="relative rounded-lg" onClick={focusHandler}>
         {renderTextPrompt()}
-        <TypeTextRender propPackage={propPackage} />
+        <Canvas propPackage={propPackage} />
       </div>
     </div>
   );
 };
 
-export default TypingInterface;
+export default Interface;

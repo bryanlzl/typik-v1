@@ -1,11 +1,11 @@
-import TypingWindow from '@/components/typingWindow/TypingWindow';
-import '../styles/globals.css';
-import Layout from '@/app/Layout';
+import Window from '@/components/Window';
+import '@/styles/globals.css';
+import Layout from '@/app/layout';
 
 const Page = (): JSX.Element => {
   return (
     <Layout>
-      <TypingWindow></TypingWindow>
+      <Window />
     </Layout>
   );
 };

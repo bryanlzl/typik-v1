@@ -1,6 +1,6 @@
 import { RenderTyped, PropTypes } from '@/types/typing';
 
-const TypeSummaryModal = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
+const ModalTypeSummary = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
   const { wordsTyped, setTypingState, setWordsTyped, typingStateRef } = propPackage;
   let totalCorrectChar: number = 0;
   let totalWrongChar: number = 0;
@@ -27,4 +27,4 @@ const TypeSummaryModal = ({ propPackage }: { propPackage: PropTypes }): JSX.Elem
   );
 };
 
-export default TypeSummaryModal;
+export default ModalTypeSummary;
