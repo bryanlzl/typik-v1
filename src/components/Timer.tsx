@@ -127,8 +127,7 @@ const Timer = ({ propPackage }: { propPackage: PropTypes }): JSX.Element => {
       )}
       <Popover className="flex flex-row">
         <PopoverButton
-          className="flex text-[1.5vw] mr-[4vw] items-center opacity-60 focus:outline-none"
-          // hover:opacity-100
+          className="flex text-[1.5vw] mr-[4vw] items-center focus:outline-none opacity-35 pointer-events-none"
           // onClick={handleDisplayTimeSelector}
         >
           <Image className="w-[1.7vw]" src={clockIcon} alt="clock-icon" />
